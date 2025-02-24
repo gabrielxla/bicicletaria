@@ -13,6 +13,7 @@ Problema relatado pelo cliente
 Diagnóstico técnico (preenchido pelo técnico)
 Peças necessárias para reparo (se houver)
 Prazo estimado para conclusão
+subtototal (custos como: mão de obra,peças e avaliação preventiva)
 Status da OS (Aberta, Em andamento, Aguardando peças, Finalizada, Cancelada)
 Termos e condições para aprovação do serviço
 
