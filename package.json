@@ -1,7 +1,7 @@
 {
-  "name": "assisti",
+  "name": "bicicletaria",
   "version": "1.0.0",
-  "description": "Desenvolvimento de um sistema desktop para gestão de ordem de serviços de uma assistência técnica",
+  "description": "Desenvolvimento de um sistema desktop para gestão de ordem de serviços de uma bicicletaria",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gabrielxla/assisti.git"
+    "url": "git+https://github.com/gabrielxla/bicicletaria.git"
   },
   "author": "Gabriel Lima",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gabrielxla/assisti/issues"
   },
-  "homepage": "https://github.com/gabrielxla/assisti#readme",
+  "homepage": "https://github.com/gabrielxla/bicicletaria.git#readme",
   "devDependencies": {
     "electron": "^34.2.0"
   }
