@@ -1,0 +1,22 @@
+1. Cadastro de Clientes
+Nome completo
+CPF/CNPJ
+Telefone e e-mail
+Endereço
+
+2. Emissão da Ordem de Serviço (OS)
+Número da OS (gerado automaticamente)
+Data e hora da abertura (gerado automaticamente)
+Dados do cliente (puxar do cadastro de clientes)
+Dados da bicicleta (Modelo,Marca,Tipo e cor)
+Problema relatado pelo cliente
+Diagnóstico técnico (preenchido pelo técnico)
+Peças necessárias para reparo (se houver)
+Prazo estimado para conclusão
+Status da OS (Aberta, Em andamento, Aguardando peças, Finalizada, Cancelada)
+Termos e condições para aprovação do serviço
+
+3. Relatórios:
+- Clientes
+- OS abertas
+- OS concluídas

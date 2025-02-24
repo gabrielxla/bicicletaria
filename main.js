@@ -5,8 +5,8 @@ let win
 const createWindow = () => {
    nativeTheme.themeSource ='dark'
    win = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: 1010,
+    height: 720,
    // minimizable: false,
     //resizable:false,
     
@@ -63,7 +63,7 @@ const  template = [
   },
   {
       label: 'Relatorios',
-      submenu: [{label: 'Clientes'},{label:'OS abertas'},{label:'OS concluidas'}]
+      submenu: [{label: 'Clientes'},{type: 'separator'},{label:'OS abertas'},{label:'OS concluidas'}]
   },
   {
       label: 'Ferramentas',
