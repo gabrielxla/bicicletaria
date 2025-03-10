@@ -11,7 +11,98 @@
 </head>
 <body>
     <div class="container">
-        <h1>OS</h1>
+    <form class="mt-2 row g-3" id="frmOS">
+        <!-- Buscar OS -->
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="searchClient" maxlength="30" spellcheck="false">
+         </div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary" id="btnRead" onclick="SearchOS()">Buscar</button>
+        </div>
+        <hr class="mt-4 border border-primary border -1">
+        <!--CLiente-->
+        <div class="col-md-4">
+            <label for="inputNameClient" class="form-label">Cliente</label>
+            <input type="text" class="form-control" id="inputNameClient" spellcheck="false" required maxlength="30">
+        </div>
+        <!--Funcionario-->
+        <div class="col-md-4">
+            <label for="inputNameFuncionario" class="form-label">Funcionario</label>
+            <input type="text" class="form-control" id="inputNameFuncionario" spellcheck="false" required maxlength="30">
+        </div>
+        <!--DATA-->
+        <div class="col-md-2">
+            <label for="inputDATAClient" class="form-label">Data</label>
+            <input type="date" class="form-control" id="inputDATAClient" spellcheck="false" required maxlength="20">
+        </div>
+        <!--HORA-->
+        <div class="col-md-2">
+            <label for="inputHRClient" class="form-label">Hora</label>
+            <input type="time" class="form-control" id="inputHRClient" spellcheck="false" required maxlength="20">
+        </div>
+        <!--Bicicleta-->
+        <div class="col-md-5">
+            <label for="inputBIKEClient" class="form-label">Bicicleta/Marca</label>
+            <input type="text" class="form-control" id="inputBIKEClient" spellcheck="false" required maxlength="30">
+        </div>
+        <!--Numero de Serie-->
+        <div class="col-md-3">
+            <label for="inputNUMClient" class="form-label">Número de Série</label>
+            <input type="text" class="form-control" id="inputNUMClient" spellcheck="false" required maxlength="30">
+        </div>
+        <!--COR-->
+        <div class="col-md-4">
+            <label for="color" class="form-label">Cor</label>
+            <!-- Select com as opções de cores -->
+            <select id="color" name="color" class="form-select">
+                <option value="red" style="background-color: red;">Vermelho</option>
+                <option value="green" style="background-color: green;">Verde</option>
+                <option value="blue" style="background-color: blue;">Azul</option>
+                <option value="yellow" style="background-color: yellow;">Amarelo</option>
+                <option value="pink" style="background-color: pink;">Rosa</option>
+                <option value="cyan" style="background-color: cyan;">Ciano</option>
+                <option value="purple" style="background-color: purple;">Roxo</option>
+                <option value="orange" style="background-color: orange;">Laranja</option>
+                <option value="brown" style="background-color: brown;">Marrom</option>
+                <option value="black" style="background-color: black; color: white;">Preto</option>
+                <option value="white" style="background-color: white;">Branco</option>
+            </select>
+        </div>
+        <!-- Tipo de manutenção-->
+        <div class="col-md-6">
+            <label for="maintenance-type" class="form-label">Tipo de Manutenção:</label>
+            <!-- Select com as opções -->
+            <select id="maintenance-type" name="maintenance-type" class="form-select">
+                <option value="preventive">Preventiva</option>
+                <option value="improvement">Melhoria</option>
+                <option value="corrective">Corretiva</option>
+            </select>
+        </div>
+        <!--Previsão para ser entregue-->
+    <div class="col-md-6">
+        <label for="inputprevisaoClient" class="form-label">Previsão de entrega</label>
+        <input type="date" class="form-control" id="inputprevisaoClient" spellcheck="false"  maxlength="100">
+    </div>
+    <!--OBSERVAÇÂO DO CLIENTE-->
+    <div class="mb-1">
+        <label for="inputOBSClient" class="form-label">Observação do cliente</label>
+        <input type="text" class="form-control" id="inputOBSClient" spellcheck="false" required maxlength="100">
+    </div>
+    <!--OBSERVAÇÂO DO Funcionario-->
+    <div class="mb-1">
+        <label for="inputOBSFuncionario" class="form-label">Conclusão do Funcionario</label>
+        <input type="text" class="form-control" id="inputOBSFuncionario" spellcheck="false" required maxlength="100">
+    </div>
+
+     <!--BOTAO-->
+     <div class="mt-5">
+        <button type="submit" class="btn btn-success" id="btnCreate">Adicionar</button>
+        <button type="submit" class="btn btn-warning" id="btnUpdate">Editar</button>
+        <button type="button"class="btn btn-danger" id="btnDelete">Excluir</button>
+        <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>
+      </div>
+      
+    </form>
     </div>
 
     <script src="../public/js/bootstrap.bundle.min.js"></script>

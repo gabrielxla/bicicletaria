@@ -11,7 +11,109 @@
 </head>
 <body>
     <div class="container">
-        <h1>clientes</h1>
+            <form class="mt-2 row g-3" id="frmClient">
+                <!-- Buscar clientes -->
+                 <div class="col-md-6">
+                    <input type="text" class="form-control" id="searchClient" maxlength="30" spellcheck="false">
+                 </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary" id="btnRead" onclick="SearchClient()">Buscar</button>
+                </div>
+                <hr class="mt-4 border border-primary border -1">
+                <!--NOME-->
+                <div class="col-md-7">
+                <label for="inputNameClient" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="inputNameClient" spellcheck="false" required maxlength="30">
+                </div>
+                <!--CPF-->
+                <div class="col-md-5">
+                    <label for="inputCPFClient" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="inputCPFClient" spellcheck="false"  maxlength="15">
+                    </div>
+                    <!--EMAIL-->
+                <div class="col-md-6">
+                    <label for="inputEmailClient" class="form-label">Email</label>
+                    <input type="text" class="form-control" id="inputEmailClient" spellcheck="false"  maxlength="30">
+                    </div>
+                    <!--TELEFONE-->
+                <div class="col-md-4">
+                    <label for="inputTelefoneClient" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" id="inputTelefoneClient" spellcheck="false" required maxlength="15">
+                    </div>
+                <!--CEP-->
+                <div class="col-md-2">
+                    <label for="inputCEpClient" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="inputCEpClient" spellcheck="false" required  maxlength="9">
+                </div>
+                 <!--LOGRADOURO-->
+                 <div class="col-md-6">
+                    <label for="inputLogradouroClient" class="form-label">Logradouro</label>
+                    <input type="text" class="form-control" id="inputLogradouroClient" spellcheck="false" required maxlength="30">
+                 </div>
+                    <!--NUMERO-->
+                 <div class="col-md-3">
+                    <label for="inputNUMClient" class="form-label">Numero</label>
+                    <input type="text" class="form-control" id="inputNUMClient" spellcheck="false" required maxlength="5">
+                 </div>   
+                 <!--COMPLEMENTO-->
+                 <div class="col-md-3">
+                    <label for="inputCOMClient" class="form-label">Complemento</label>
+                    <input type="text" class="form-control" id="inputCOMClient" spellcheck="false"  maxlength="12">
+                 </div>
+                <!--BAIRRO-->
+                <div class="col-md-5">
+                    <label for="inputBAIClient" class="form-label">Bairro</label>
+                    <input type="text" class="form-control" id="inputBAIClient" spellcheck="false" required maxlength="30">
+                </div>
+                <!--CIDADE-->
+                <div class="col-md-4">
+                    <label for="inputESTClient" class="form-label">Estado</label>
+                    <input type="text" class="form-control" id="inputESTClient" spellcheck="false" required maxlength="30">
+                </div>
+                <!--UF-->
+                <div class="col-md-3">
+                    <label for="uf" class="form-label">UF</label>
+                    <select class="form-select" id="uf" required>
+                      <option value="" disabled selected></option>
+                      <option value="AC">Acre</option>
+                      <option value="AL">Alagoas</option>
+                      <option value="AP">Amapá</option>
+                      <option value="AM">Amazonas</option>
+                      <option value="BA">Bahia</option>
+                      <option value="CE">Ceará</option>
+                      <option value="DF">Distrito Federal</option>
+                      <option value="ES">Espírito Santo</option>
+                      <option value="GO">Goiás</option>
+                      <option value="MA">Maranhão</option>
+                      <option value="MT">Mato Grosso</option>
+                      <option value="MS">Mato Grosso do Sul</option>
+                      <option value="MG">Minas Gerais</option>
+                      <option value="PA">Pará</option>
+                      <option value="PB">Paraíba</option>
+                      <option value="PR">Paraná</option>
+                      <option value="PE">Pernambuco</option>
+                      <option value="PI">Piauí</option>
+                      <option value="RJ">Rio de Janeiro</option>
+                      <option value="RN">Rio Grande do Norte</option>
+                      <option value="RS">Rio Grande do Sul</option>
+                      <option value="RO">Rondônia</option>
+                      <option value="RR">Roraima</option>
+                      <option value="SC">Santa Catarina</option>
+                      <option value="SP">São Paulo</option>
+                      <option value="SE">Sergipe</option>
+                      <option value="TO">Tocantins</option>
+                    </select>
+                  </div>
+    
+                  <!--BOTAO-->
+                  <div class="mt-5">
+                    <button type="submit" class="btn btn-success" id="btnCreate">Adicionar</button>
+                    <button type="submit" class="btn btn-warning" id="btnUpdate">Editar</button>
+                    <button type="button"class="btn btn-danger" id="btnDelete">Excluir</button>
+                    <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>
+                  </div>
+                
+            </form>
     </div>
 
     <script src="../public/js/bootstrap.bundle.min.js"></script>
