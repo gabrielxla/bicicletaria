@@ -13,20 +13,33 @@
     <div class="container">
     <form class="mt-2 row g-3" id="frmOS">
         <!-- Buscar OS -->
-        <div class="col-md-6">
-            <input type="text" class="form-control" id="searchClient" maxlength="30" spellcheck="false">
+        <div class="col-md-3">
+            <input type="text" class="form-control" id="searchOS" maxlength="30" placeholder="N°OS"  readonly spellcheck="false">
          </div>
-        <div class="col-md-4">
-            <button type="button" class="btn btn-primary" id="btnRead" onclick="SearchOS()">Buscar</button>
-        </div>
-        <hr class="mt-4 border border-primary border -1">
         <!--CLiente-->
         <div class="col-md-4">
-            <label for="inputNameClient" class="form-label">Cliente</label>
-            <input type="text" class="form-control" id="inputNameClient" spellcheck="false" required maxlength="30">
+            <input type="text"  class="form-control" id="inputNameClient" spellcheck="false" placeholder="Cliente" maxlength="30">
         </div>
+         <div class="col-md-4">
+            <button type="button" class="btn btn-primary" id="btnRead" onclick="SearchOS()">Buscar</button>
+        </div>
+        
+        <hr class="mt-4 border border-primary border -1">
+        <!-- STATUS-->
+        <div class="col-md-3">
+            <label for="maintenance-type" class="form-label">Status</label>
+            
+            <select id="maintenance-type" name="maintenance-type" class="form-select">
+                <option value="" disabled selected></option>
+                <option value="open">Aberta</option>
+                <option value="in progress">Andamento</option>
+                <option value="completed">Concluida</option>
+                <option value="cancel">Cancelada</option>
+            </select>
+        </div>
+
         <!--Funcionario-->
-        <div class="col-md-4">
+        <div class="col-md-5">
             <label for="inputNameFuncionario" class="form-label">Funcionario</label>
             <input type="text" class="form-control" id="inputNameFuncionario" spellcheck="false" required maxlength="30">
         </div>
@@ -55,6 +68,7 @@
             <label for="color" class="form-label">Cor</label>
             <!-- Select com as opções de cores -->
             <select id="color" name="color" class="form-select">
+                <option value="" disabled selected></option>
                 <option value="red" style="background-color: red;">Vermelho</option>
                 <option value="green" style="background-color: green;">Verde</option>
                 <option value="blue" style="background-color: blue;">Azul</option>
@@ -71,8 +85,9 @@
         <!-- Tipo de manutenção-->
         <div class="col-md-6">
             <label for="maintenance-type" class="form-label">Tipo de Manutenção:</label>
-            <!-- Select com as opções -->
+            
             <select id="maintenance-type" name="maintenance-type" class="form-select">
+                <option value="" disabled selected></option>
                 <option value="preventive">Preventiva</option>
                 <option value="improvement">Melhoria</option>
                 <option value="corrective">Corretiva</option>
@@ -92,6 +107,11 @@
     <div class="mb-1">
         <label for="inputOBSFuncionario" class="form-label">Conclusão do Funcionario</label>
         <input type="text" class="form-control" id="inputOBSFuncionario" spellcheck="false" required maxlength="100">
+    </div>
+      <!--TOTAL-->
+      <div class="col-md-3">
+        <label for="inputtotalClient" class="form-label">Total</label>
+        <input type="text" class="form-control" id="inputtotalClient" spellcheck="false"  maxlength="100">
     </div>
 
      <!--BOTAO-->
