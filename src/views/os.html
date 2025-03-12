@@ -13,9 +13,10 @@
     <div class="container">
     <form class="mt-2 row g-3" id="frmOS">
         <!-- Buscar OS -->
-        <div class="col-md-3">
-            <input type="text" class="form-control" id="searchOS" maxlength="30" placeholder="N°OS"  readonly spellcheck="false">
-         </div>
+          <div class="col-md-2">
+            <input type="number" class="form-control" id="inputNumeroOS" spellcheck="false" disabled
+               placeholder="N°OS"  maxlength="30">
+        </div>
         <!--CLiente-->
         <div class="col-md-4">
             <input type="text"  class="form-control" id="inputNameClient" spellcheck="false" placeholder="Cliente" maxlength="30">
@@ -84,7 +85,7 @@
         </div>
         <!-- Tipo de manutenção-->
         <div class="col-md-6">
-            <label for="maintenance-type" class="form-label">Tipo de Manutenção:</label>
+            <label for="maintenance-type" class="form-label">Tipo de Manutenção</label>
             
             <select id="maintenance-type" name="maintenance-type" class="form-select">
                 <option value="" disabled selected></option>
@@ -106,12 +107,25 @@
     <!--OBSERVAÇÂO DO Funcionario-->
     <div class="mb-1">
         <label for="inputOBSFuncionario" class="form-label">Conclusão do Funcionario</label>
-        <input type="text" class="form-control" id="inputOBSFuncionario" spellcheck="false" required maxlength="100">
+        <input type="text" class="form-control" id="inputOBSFuncionario" spellcheck="false"  maxlength="100">
     </div>
       <!--TOTAL-->
       <div class="col-md-3">
         <label for="inputtotalClient" class="form-label">Total</label>
         <input type="text" class="form-control" id="inputtotalClient" spellcheck="false"  maxlength="100">
+    </div>
+     <!-- FORMAS DE PAGAMENTO-->
+     <div class="col-md-3">
+        <label for="maintenance-type" class="form-label">Formas de pagamento</label>
+        
+        <select id="maintenance-type" name="maintenance-type" class="form-select">
+            <option value="" disabled selected></option>
+            <option value="pix">Pix</option>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="debito">Débito</option>
+            <option value="credito">Credito</option>
+            <option value="boleto">boleto</option>
+        </select>
     </div>
 
      <!--BOTAO-->
