@@ -32,3 +32,8 @@ footer {
     position: fixed;
     bottom: 0;
 }
+#btnRead {
+    margin-top: 23px;
+    padding-left: 10px;
+    
+}

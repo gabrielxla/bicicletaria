@@ -14,3 +14,7 @@ function buscarCEP(){
         .catch(error => console.log(error)
         )
     }
+    function teste(){
+        let lap=document.getElementById('floatingTextarea').value
+        console.log(lap)
+    }

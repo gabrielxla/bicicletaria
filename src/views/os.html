@@ -13,21 +13,46 @@
     <div class="container">
     <form class="mt-2 row g-3" id="frmOS">
         <!-- Buscar OS -->
-          <div class="col-md-2">
+          <div class="col-md-3">
+            <label for="inputNumeroOS">N°OS</label>
             <input type="number" class="form-control" id="inputNumeroOS" spellcheck="false" disabled
-               placeholder="N°OS"  maxlength="30">
+                 maxlength="30">
+        </div>
+        
+        
+        <!--DATA-->
+        <div class="col-md-3">
+            <label for="inputdataClient">DATA</label>
+            <input type="date"  class="form-control" id="inputdataClient" spellcheck="false" disabled maxlength="30" >
         </div>
         <!--CLiente-->
-        <div class="col-md-4">
+        <div class="col-md-5">
+            <label for="inputNameClient">Buscar cliente</label>
             <input type="text"  class="form-control" id="inputNameClient" spellcheck="false" placeholder="Cliente" maxlength="30">
         </div>
-         <div class="col-md-4">
+        <div class="col-md-1">
             <button type="button" class="btn btn-primary" id="btnRead" onclick="SearchOS()">Buscar</button>
         </div>
+        <!--NOME-->
+        <div class="col-md-4">
+            <label for="inputNomeClient">Nome</label>
+            <input type="text"  class="form-control" id="inputNomeClient" spellcheck="false" disabled maxlength="30">
+        </div>
+        <!--CPF-->
+        <div class="col-md-4">
+            <label for="inputCPFClient">CPF</label>
+            <input type="text"  class="form-control" id="inputCPFClient" spellcheck="false" disabled maxlength="30">
+        </div>
+        <div class="col-md-4">
+            <label for="inputtelClient">Telefone</label>
+            <input type="text"  class="form-control" id="inputtelClient" spellcheck="false"  disabled maxlength="30">
+        </div>
+         
+        
         
         <hr class="mt-4 border border-primary border -1">
         <!-- STATUS-->
-        <div class="col-md-3">
+        <div class="col-md-5">
             <label for="maintenance-type" class="form-label">Status</label>
             
             <select id="maintenance-type" name="maintenance-type" class="form-select">
@@ -40,20 +65,11 @@
         </div>
 
         <!--Funcionario-->
-        <div class="col-md-5">
+        <div class="col-md-7">
             <label for="inputNameFuncionario" class="form-label">Funcionario</label>
             <input type="text" class="form-control" id="inputNameFuncionario" spellcheck="false" required maxlength="30">
         </div>
-        <!--DATA-->
-        <div class="col-md-2">
-            <label for="inputDATAClient" class="form-label">Data</label>
-            <input type="date" class="form-control" id="inputDATAClient" spellcheck="false" required maxlength="20">
-        </div>
-        <!--HORA-->
-        <div class="col-md-2">
-            <label for="inputHRClient" class="form-label">Hora</label>
-            <input type="time" class="form-control" id="inputHRClient" spellcheck="false" required maxlength="20">
-        </div>
+        
         <!--Bicicleta-->
         <div class="col-md-5">
             <label for="inputBIKEClient" class="form-label">Bicicleta/Marca</label>
@@ -102,7 +118,7 @@
     <!--OBSERVAÇÂO DO CLIENTE-->
     <div class="mb-1">
         <label for="inputOBSClient" class="form-label">Observação do cliente</label>
-        <input type="text" class="form-control" id="inputOBSClient" spellcheck="false" required maxlength="100">
+        <textarea class="form-control" placeholder="Observação" id="floatingTextarea" onblur="teste()">teste</textarea>
     </div>
     <!--OBSERVAÇÂO DO Funcionario-->
     <div class="mb-1">
@@ -111,8 +127,9 @@
     </div>
       <!--TOTAL-->
       <div class="col-md-3">
-        <label for="inputtotalClient" class="form-label">Total</label>
+        <label for="inputtotalClient" class="form-label">Total R$</label>
         <input type="text" class="form-control" id="inputtotalClient" spellcheck="false"  maxlength="100">
+        
     </div>
      <!-- FORMAS DE PAGAMENTO-->
      <div class="col-md-3">
@@ -133,7 +150,9 @@
         <button type="submit" class="btn btn-success" id="btnCreate">Adicionar</button>
         <button type="submit" class="btn btn-warning" id="btnUpdate">Editar</button>
         <button type="button"class="btn btn-danger" id="btnDelete">Excluir</button>
+        <button type="button" class="btn btn-secondary">Imprimir</button>
         <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>
+
       </div>
       
     </form>
