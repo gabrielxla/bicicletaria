@@ -19,5 +19,8 @@
   "homepage": "https://github.com/gabrielxla/bicicletaria.git#readme",
   "devDependencies": {
     "electron": "^34.2.0"
+  },
+  "dependencies": {
+    "mongoose": "^8.12.1"
   }
 }

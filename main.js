@@ -123,3 +123,4 @@ const  template = [
       submenu: [{label:'Sobre',click: () => aboutWindow()}]
   }
 ]
+
