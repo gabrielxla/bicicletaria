@@ -11,6 +11,7 @@ const conectar = async () => {
             await mongoose.connect(url)
             conectado=true
             console.log("MongoDB conectado")
+            return true
         }catch (error){
             if (error.code = 8000){
                 console.log("Erro de autentificação")

@@ -52,7 +52,7 @@
         
         <hr class="mt-4 border border-primary border -1">
         <!-- STATUS-->
-        <div class="col-md-5">
+        <div class="col-md-2">
             <label for="maintenance-type" class="form-label">Status</label>
             
             <select id="maintenance-type" name="maintenance-type" class="form-select">
@@ -65,23 +65,23 @@
         </div>
 
         <!--Funcionario-->
-        <div class="col-md-7">
+        <div class="col-md-3">
             <label for="inputNameFuncionario" class="form-label">Funcionario</label>
             <input type="text" class="form-control" id="inputNameFuncionario" spellcheck="false" required maxlength="30">
         </div>
         
         <!--Bicicleta-->
-        <div class="col-md-5">
+        <div class="col-md-2">
             <label for="inputBIKEClient" class="form-label">Bicicleta/Marca</label>
             <input type="text" class="form-control" id="inputBIKEClient" spellcheck="false" required maxlength="30">
         </div>
         <!--Numero de Serie-->
         <div class="col-md-3">
-            <label for="inputNUMClient" class="form-label">Número de Série</label>
+            <label for="inputNUMClient" class="form-label">Número do quadro</label>
             <input type="text" class="form-control" id="inputNUMClient" spellcheck="false" required maxlength="30">
         </div>
         <!--COR-->
-        <div class="col-md-4">
+        <div class="col-md-2">
             <label for="color" class="form-label">Cor</label>
             <!-- Select com as opções de cores -->
             <select id="color" name="color" class="form-select">
@@ -100,10 +100,10 @@
             </select>
         </div>
         <!-- Tipo de manutenção-->
-        <div class="col-md-6">
-            <label for="maintenance-type" class="form-label">Tipo de Manutenção</label>
+        <div class="col-md-3">
+            <label for="maintenance-typeT" class="form-label">Tipo de Manutenção</label>
             
-            <select id="maintenance-type" name="maintenance-type" class="form-select">
+            <select id="maintenance-typeT" name="maintenance-type" class="form-select">
                 <option value="" disabled selected></option>
                 <option value="preventive">Preventiva</option>
                 <option value="improvement">Melhoria</option>
@@ -111,31 +111,41 @@
             </select>
         </div>
         <!--Previsão para ser entregue-->
-    <div class="col-md-6">
+    <div class="col-md-3">
         <label for="inputprevisaoClient" class="form-label">Previsão de entrega</label>
         <input type="date" class="form-control" id="inputprevisaoClient" spellcheck="false"  maxlength="100">
     </div>
     <!--OBSERVAÇÂO DO CLIENTE-->
-    <div class="mb-1">
+    <div class="col-md-3">
         <label for="inputOBSClient" class="form-label">Observação do cliente</label>
         <textarea class="form-control" placeholder="Observação" id="floatingTextarea"></textarea>
     </div>
     <!--OBSERVAÇÂO DO Funcionario-->
-    <div class="mb-1">
+    <div class="col-md-3">
         <label for="inputOBSFuncionario" class="form-label">Conclusão do Funcionario</label>
         <textarea class="form-control" placeholder="Conclusão" id="floatingTextarea"></textarea>
     </div>
+    <!--Peças para Trocar-->
+    <div class="col-md-3">
+        <label for="inputpeca" class="form-label">Peças para Trocar</label>
+        <textarea class="form-control" id="floatingTextarea"></textarea>
+    </div>
+    <!--Acessorios-->
+    <div class="col-md-3">
+        <label for="inputAcessorios" class="form-label">Acessorios</label>
+        <textarea class="form-control" id="floatingTextarea"></textarea>
+    </div>
       <!--TOTAL-->
       <div class="col-md-3">
-        <label for="inputtotalClient" class="form-label">Total R$</label>
-        <input type="text" class="form-control" id="inputtotalClient" spellcheck="false"  maxlength="100">
+        <label for="inputtotalCliente" class="form-label">Total R$</label>
+        <input type="text" class="form-control" id="inputtotalCliente" spellcheck="false"  maxlength="100">
         
     </div>
      <!-- FORMAS DE PAGAMENTO-->
      <div class="col-md-3">
-        <label for="maintenance-type" class="form-label">Formas de pagamento</label>
+        <label for="maintenance-typep" class="form-label">Formas de pagamento</label>
         
-        <select id="maintenance-type" name="maintenance-type" class="form-select">
+        <select id="maintenance-typep" name="maintenance-type" class="form-select">
             <option value="" disabled selected></option>
             <option value="pix">Pix</option>
             <option value="dinheiro">Dinheiro</option>

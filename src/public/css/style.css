@@ -25,12 +25,18 @@ body{
     
 }
 footer {
-    height: 40px;
+    height: 55px;
     width: 100%;
     background-color: black;
-    text-align: center;
     position: fixed;
     bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+footer p {
+    padding: 6px;
+    padding-bottom: 5px;
 }
 #btnRead {
     margin-top: 23px;

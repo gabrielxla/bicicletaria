@@ -1,4 +1,5 @@
 const { app, BrowserWindow, nativeTheme, Menu,ipcMain} = require('electron')
+const {conectar, desconectar} = require('./db.js')
 
 const path = require('node:path')
 let win
@@ -103,6 +104,21 @@ app.whenReady().then(() => {
   })
   //reduzir logs nao criticos
   app.commandLine.appendSwitch('log-level','3')
+
+ipcMain.on('db-connect', async (event)=>{
+  let conectado = await conectar()
+  if (conectado){
+    setTimeout(()=>{
+      event.reply('db-status',"conectado")
+    }, 500)
+  }
+})
+
+
+
+app.on('before-quit', ()=>{
+ desconectar()
+})
 
   // template do menu
 const  template = [
