@@ -22,4 +22,4 @@ const clienteSchema = new Schema({
         enum: ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'PIX', 'Transferência' ], 
             
 }},{versionKey:false})
-module.exports = model ('OS', clienteSchema)
+module.exports = model ('OS', osSchema)

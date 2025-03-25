@@ -1,5 +1,6 @@
 const { app, BrowserWindow, nativeTheme, Menu,ipcMain} = require('electron')
 const {conectar, desconectar} = require('./db.js')
+const clientModel = require('./src/models/Cliente.js')
 
 const path = require('node:path')
 let win
@@ -59,6 +60,9 @@ function clientWindow() {
       height:720,
       resizable: false,
       modal:true,
+      webPreferences: {
+        preload: path.join(__dirname,'preload.js')
+      },
       minimizable:false,
       parent:main
     })
@@ -139,4 +143,29 @@ const  template = [
       submenu: [{label:'Sobre',click: () => aboutWindow()}]
   }
 ]
+//--------------------------------------------------------------------------------------------------------------------------------
+// == Clientes = CRUD
+ipcMain.on('new-client', async (event,client)=>{
+  console.log(client)
+  try {
+    const newClient = new clientModel({
+      nomeClient: client.nameCli,
+      cpfCliente: client.cpfCli,
+      emailCliente: client.emailCli,
+      phoneCliente: client.phoneCli,
+      cepCliente: client.cepCli,
+      addressCliente: client.addressCli,
+      numberCliente: client.numberCli,
+      complementCliente: client.complementCli,
+      bairroCliente: client.bairroCli,
+      cityCliente: client.cityCli,
+      ufCliente: client.ufCli    })
+      await newClient.save()
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
+//===================================================================================================================================
 
