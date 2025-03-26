@@ -41,13 +41,51 @@ let cityClient = document.getElementById("inputESTClient")
 let ufClient = document.getElementById("uf")
 
 //===================================================================
+//Pegar as informações da Os
+let frmOS = document.getElementById("frmOS")
+let statusOS = document.getElementById("maintenance-type")
+let funcioOs = document.getElementById("inputNameFuncionario")
+let bikeOs = document.getElementById("inputBIKEClient")
+let numS = document.getElementById("inputNUMClient")
+let cor = document.getElementById("color")
+let manutencao = getElementById("maintenance-typeT")
+let previsao = getElementById("inputprevisaoClient")
+let obsC = getElementById("floatingTextareaC")
+let obsF = getElementById("floatingTextareaF")
+let pecas = getElementById("floatingTextareaP")
+let acessorios = getElementById("floatingTextareaA")
+let  total = getElementById("inputtotalCliente")
+let formas = getElementById("maintenance-typeD")
+//===================================================================
+frmOS.addEventListener("submit", async(event)=>{
+    event.preventDefault()
+    console.log(statusOS.value,funcioOs.value,bikeOs.value,numS.value,cor.value,manutencao.value,previsao.value,obsC.value,obsF.value,pecas.value,acessorios.value,total.value,formas.value)
+
+    const os = {
+        status: statusOS.value,
+        fun: funcioOs.value,
+        bike: bikeOs.value,
+        numQuadro: numS.value,
+        cor: cor.value,
+        manutencao: manutencao.value,
+        previsaoEntrega: previsao.value,
+        obsCliente: obsC.value,
+        obsFuncionario: obsF.value,
+        pecas: pecas.value,
+        acessorios: acessorios.value,
+        total: total.value,
+        formasPagamento: formas.value
+    }
+    api.newOs(os)
+})
+//===========================================================
 frmClient.addEventListener("submit", async(event)=> {
     event.preventDefault()
     console.log(nameClient.value,cpfClient.value,emailClient.value,phoneClient.value,cepClient.value,addressClient.value,numberClient.value,complementClient.value,bairroClient.value,cityClient.value,ufClient.value)
 
 const client = {
     nameCli: nameClient.value,
-    cpfcli: cpfClient.value,
+    cpfCli: cpfClient.value,
     emailCli: emailClient.value,
     phoneCli: phoneClient.value,
     cepCli: cepClient.value

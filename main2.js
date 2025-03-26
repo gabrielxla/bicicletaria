@@ -1,14 +1,14 @@
 // Banco de dados
 
 const {conectar, desconectar} = require('./db.js')
-const clienteModel = require('./src/models/OS.js')
+//const clienteModel = require('./src/models/OS.js')
 
-const salvarCliente = async (nomeCli, foneCLi, cpfCli,funC,bic,bicS,cor,tip,prev,obsC,obsT,tot,pag)=> {
+const osSalvar = async (cpfCli,nomeCli,status,funC,bic,bicS,cor,tip,prev,obsC,obsT,pecas,acessorios,tot,pag)=> {
     try{
         const novoCliente = new clienteModel({
-          nomeCliente: nomeCli,
-          telefoneCliente: foneCLi,
           cpfCliente: cpfCli,
+          nomeCliente: nomeCli,
+          status: status,
           funcionarioResponsavel: funC,
           bicicleta: bic,
           numeroSerieBicicleta: bicS,
@@ -17,6 +17,8 @@ const salvarCliente = async (nomeCli, foneCLi, cpfCli,funC,bic,bicS,cor,tip,prev
           previsaoEntrega: prev,
           observacaoCliente: obsC,
           conclusaoTecnico: obsT,
+          pecasTroca: pecas,
+          acessorios: acessorios,
           total: tot,
          formasPagamento: pag 
         })
@@ -56,9 +58,9 @@ const buscarClienteCPF = async(cpf)=>{
     }
 }
 
-const atualizarCliente = async (id, nomeCli, foneCLi, cpfCli)=>{
+const atualizarCliente = async (id,cpfCli,nomeCli,status,funC,bic,bicS,cor,tip,prev,obsC,obsT,pecas,acessorios,tot,pag)=>{
     try {
-        const clienteEditado = await clienteModel.findByIdAndUpdate(id,{nomeCliente: nomeCli,telefoneCliente: foneCLi, cpfCliente:cpfCli},{new: true, runValidators: true})
+        const clienteEditado = await clienteModel.findByIdAndUpdate(id,{nomeCliente: nomeCli,cpfCliente: cpfCli,status: status, funcionarioResponsavel: funC, bicicleta: bic, numeroSerieBicicleta:bicS,corBicicleta: cor,tipoManutencao: tip, previsaoEntrega: prev,observacaoCliente: obsC,conclusaoTecnico: obsT,pecasTroca: pecas,acessorios:acessorios, total: tot,formasPagamento: pag })
         console.log("OS Atualizada")
     } catch (error) {
         if(error.code = 11000){
@@ -86,10 +88,10 @@ const Iniciarsistema = async ()=> {
   console.log("------------------")
   await conectar()
   //await listarCliente()
-  //await salvarCliente("solange","7323777-7777","4324812434","toninho","Caloi","21321","Preta","Melhoria","20/10/01","Precisa trocar as rodas ", "Trocar as Rodase a marcha",1250,"Dinheiro")
-  //await buscarClienteNome("raiam ")
-  //await buscarClienteCPF("44829057800")
-  //await atualizarCliente("67db28275a1dadb30a5c4411","solange","7323777-7777",4324812434,"toninho","Caloi","21321","Preta","Melhoria","20/10/01","Precisa trocar as rodas ", "Trocar as Rodase a marcha",1250,"Dinheiro)
+  //await osSalvar("123456789000","luca","Aberta","Toninho","caloi","11091","Preta","Preventiva","10/04/05","Trocar a corrente","Trocar a corrente por uma nova modelo 05","Corrente", "Bolsa pequena e uma lanterna dianteira",1250,"Dinheiro")
+   // await buscarClienteNome("gabriel")
+  //await buscarClienteCPF("44909123")
+  //await atualizarCliente("67e43e01d73e7a27dd3af8e0","123456789000","gabriel","Aberta","pituca","caloi","11091","vermelha","Corretiva","10/04/06","Trocar a corrente","Trocar a corrente por uma nova modelo 05","Corrente", "Bolsa pequena e uma lanterna dianteira",1250,"Dinheiro")
   //await excluirCliente("67db2386b6501ad6704953b7")
   await desconectar()
 }

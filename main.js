@@ -1,6 +1,7 @@
 const { app, BrowserWindow, nativeTheme, Menu,ipcMain} = require('electron')
 const {conectar, desconectar} = require('./db.js')
 const clientModel = require('./src/models/Cliente.js')
+const osModel = require ("./src/models/OS.js")
 
 const path = require('node:path')
 let win
@@ -83,7 +84,10 @@ function osWindow() {
       resizable: false,
       modal:true,
       minimizable:false,
-      parent:main
+      parent:main,
+      webPreferences: {
+        preload: path.join(__dirname,'preload.js')
+      },
     })
 
 }
@@ -168,4 +172,30 @@ ipcMain.on('new-client', async (event,client)=>{
 
 
 //===================================================================================================================================
+// CRUD Os
 
+ipcMain.on('new-os', async (event,os)=>{
+  console.log(os)
+  try {
+    const newOs = new osModel({
+      status: os.status,
+      funcionarioResponsavel: os.fun,
+      bicicleta: os.bike,
+      numeroSerieBicicleta: os.numQuadro,
+      corBicicleta: os.cor,
+      tipoManutencao: os.manutencao,
+      previsaoEntrega: os.previsaoEntrega,
+      observacaoCliente: os.obsCliente,
+      conclusaoTecnico: os.obsFuncionario,
+      pecasTroca: os.pecas,
+      acessorios: os.acessorios,
+      total: os.total,
+      formasPagamento: os.formasPagamento
+       
+
+    })
+      await  newOs.save()
+  } catch (error) {
+    console.log(error)
+  }
+})
