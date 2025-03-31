@@ -1,7 +1,9 @@
-const { app, BrowserWindow, nativeTheme, Menu,ipcMain} = require('electron')
+const { app, BrowserWindow, nativeTheme, Menu,ipcMain, dialog, shell} = require('electron')
 const {conectar, desconectar} = require('./db.js')
 const clientModel = require('./src/models/Cliente.js')
 const osModel = require ("./src/models/OS.js")
+const  {jspdf, default: jsPDF} = require('jspdf')
+const fs = require('fs')
 
 const path = require('node:path')
 let win
@@ -136,7 +138,7 @@ const  template = [
   },
   {
       label: 'Relatorios',
-      submenu: [{label: 'Clientes'},{type: 'separator'},{label:'OS abertas'},{label:'OS concluidas'}]
+      submenu: [{label: 'Clientes',click: () => relatorioClientes()},{type: 'separator'},{label:'OS abertas'},{label:'OS concluidas'}]
   },
   {
       label: 'Ferramentas',
@@ -165,10 +167,61 @@ ipcMain.on('new-client', async (event,client)=>{
       cityCliente: client.cityCli,
       ufCliente: client.ufCli    })
       await newClient.save()
+      dialog.showMessageBox({
+        type: 'info',
+        title: "Aviso",
+        message: "Cliente adicionado com sucesso",
+        buttons: ['OK']
+      }).then((result)=>{
+        if(result.response === 0){
+         event.reply('reset-form') 
+        }
+         
+      })
   } catch (error) {
+       // se o código de erro for 11000 (cpf duplicado) enviar uma mensagem ao usuário
+       if(error.code === 11000) {
+        dialog.showMessageBox({
+            type: 'error',
+            title: "Atenção!",
+            message: "CPF já está cadastrado\nVerifique se digitou corretamente",
+            buttons: ['OK']
+        }).then((result) => {
+            if (result.response === 0) {
+                // limpar a caixa de input do cpf, focar esta caixa e deixar a borda em vermelho
+            }
+        })
+    }
     console.log(error)
   }
 })
+//======================================
+//relatorio do clientes
+async function relatorioClientes() {
+  try {
+      const clientes = await clientModel.find().sort({nomeClient:1})
+     const doc = new jsPDF('p','mm','a4')
+     doc.setFontSize(26)
+     doc.text("Relatorio de clientes", 14, 20)
+     const dataAtual = new Date().toLocaleDateString('pt-br')
+     doc.setFontSize(14)
+     doc.text(`Data: ${dataAtual}`, 170,10)
+     let y = 45
+     doc.text("Nome", 14,y)
+     doc.text("telefone", 80,y)
+     doc.text("email", 130,y)
+     y+= 5
+     doc.setLineWidth(0.5)
+     doc.line(10,y,200,y)
+
+     const tempDir = app.getPath('temp')
+     const filePath = path.join(tempDir, 'clientes.pdf')
+     doc.save(filePath)
+     shell.openPath(filePath)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 //===================================================================================================================================
@@ -195,6 +248,17 @@ ipcMain.on('new-os', async (event,os)=>{
 
     })
       await  newOs.save()
+      dialog.showMessageBox({
+        type: 'info',
+        title: "Aviso",
+        message: "Os adicionado com sucesso",
+        buttons: ['OK']
+      }).then((result)=>{
+        if(result.response === 0){
+         event.reply('reset-form') 
+        }
+         
+      })
   } catch (error) {
     console.log(error)
   }

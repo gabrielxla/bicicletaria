@@ -40,44 +40,7 @@ let bairroClient = document.getElementById("inputBAIClient")
 let cityClient = document.getElementById("inputESTClient")
 let ufClient = document.getElementById("uf")
 
-//===================================================================
-//Pegar as informações da Os
-let frmOS = document.getElementById("frmOS")
-let statusOS = document.getElementById("maintenance-type")
-let funcioOs = document.getElementById("inputNameFuncionario")
-let bikeOs = document.getElementById("inputBIKEClient")
-let numS = document.getElementById("inputNUMClient")
-let cor = document.getElementById("color")
-let manutencao = getElementById("maintenance-typeT")
-let previsao = getElementById("inputprevisaoClient")
-let obsC = getElementById("floatingTextareaC")
-let obsF = getElementById("floatingTextareaF")
-let pecas = getElementById("floatingTextareaP")
-let acessorios = getElementById("floatingTextareaA")
-let  total = getElementById("inputtotalCliente")
-let formas = getElementById("maintenance-typeD")
-//===================================================================
-frmOS.addEventListener("submit", async(event)=>{
-    event.preventDefault()
-    console.log(statusOS.value,funcioOs.value,bikeOs.value,numS.value,cor.value,manutencao.value,previsao.value,obsC.value,obsF.value,pecas.value,acessorios.value,total.value,formas.value)
 
-    const os = {
-        status: statusOS.value,
-        fun: funcioOs.value,
-        bike: bikeOs.value,
-        numQuadro: numS.value,
-        cor: cor.value,
-        manutencao: manutencao.value,
-        previsaoEntrega: previsao.value,
-        obsCliente: obsC.value,
-        obsFuncionario: obsF.value,
-        pecas: pecas.value,
-        acessorios: acessorios.value,
-        total: total.value,
-        formasPagamento: formas.value
-    }
-    api.newOs(os)
-})
 //===========================================================
 frmClient.addEventListener("submit", async(event)=> {
     event.preventDefault()
@@ -98,3 +61,67 @@ const client = {
 }
  api.newClient(client)
 })
+//====== Reset form =======================================================================
+function resetForm() {
+location.reload()
+}
+
+api.resetForm((args)=>{
+    resetForm()
+})
+
+// === Função para aplicar máscara no CPF ===
+function aplicarMascaraCPF(campo) {
+    let cpf = campo.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (cpf.length > 3) cpf = cpf.replace(/^(\d{3})(\d)/, "$1.$2");
+    if (cpf.length > 6) cpf = cpf.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+    if (cpf.length > 9) cpf = cpf.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+
+    campo.value = cpf;
+}
+
+// === Função para validar CPF ===
+function validarCPF() {
+    let campo = document.getElementById('inputCPFClient');
+    let cpf = campo.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+        campo.style.borderColor = "red";
+        campo.style.color = "red";
+        return false;
+    }
+
+    let soma = 0, resto;
+
+    for (let i = 1; i <= 9; i++) soma += parseInt(cpf[i - 1]) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf[9])) {
+        campo.style.borderColor = "red";
+        campo.style.color = "red";
+        return false;
+    }
+
+    soma = 0;
+    for (let i = 1; i <= 10; i++) soma += parseInt(cpf[i - 1]) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf[10])) {
+        campo.style.borderColor = "red";
+        campo.style.color = "red";
+        return false;
+    }
+
+    campo.style.borderColor = "green";
+    campo.style.color = "green";
+    return true;
+}
+
+// Adicionar eventos para CPF
+cpfClient.addEventListener("input", () => aplicarMascaraCPF(cpfClient)); // Máscara ao digitar
+cpfClient.addEventListener("blur", validarCPF); // Validação ao perder o foco
+
+
+// Limpa o CPF antes de salvar no banco
+let cpfSemFormatacao = cpfClient.value.replace(/\D/g, "");
