@@ -46,9 +46,11 @@ frmClient.addEventListener("submit", async(event)=> {
     event.preventDefault()
     console.log(nameClient.value,cpfClient.value,emailClient.value,phoneClient.value,cepClient.value,addressClient.value,numberClient.value,complementClient.value,bairroClient.value,cityClient.value,ufClient.value)
 
+// Limpa o CPF antes de salvar no banco
+let cpfSemFormatacao = cpfClient.value.replace(/\D/g, "");
 const client = {
     nameCli: nameClient.value,
-    cpfCli: cpfClient.value,
+    cpfCli: cpfSemFormatacao,
     emailCli: emailClient.value,
     phoneCli: phoneClient.value,
     cepCli: cepClient.value
@@ -123,5 +125,4 @@ cpfClient.addEventListener("input", () => aplicarMascaraCPF(cpfClient)); // Más
 cpfClient.addEventListener("blur", validarCPF); // Validação ao perder o foco
 
 
-// Limpa o CPF antes de salvar no banco
-let cpfSemFormatacao = cpfClient.value.replace(/\D/g, "");
+

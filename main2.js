@@ -1,6 +1,6 @@
 // Banco de dados
 
-const {conectar, desconectar} = require('./db.js')
+//const {conectar, desconectar} = require('./db.js')
 //const clienteModel = require('./src/models/OS.js')
 
 const osSalvar = async (cpfCli,nomeCli,status,funC,bic,bicS,cor,tip,prev,obsC,obsT,pecas,acessorios,tot,pag)=> {

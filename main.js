@@ -201,19 +201,47 @@ async function relatorioClientes() {
   try {
       const clientes = await clientModel.find().sort({nomeClient:1})
      const doc = new jsPDF('p','mm','a4')
-     doc.setFontSize(26)
-     doc.text("Relatorio de clientes", 14, 20)
+     const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+     const imageBase64 = fs.readFileSync(imagePath, {encoding: 'base64'})
+     doc.addImage(imageBase64, 'PNG', 3,-15)
+     doc.setFontSize(18)
+     doc.text("Relatorio de clientes", 14, 45)
      const dataAtual = new Date().toLocaleDateString('pt-br')
-     doc.setFontSize(14)
+     doc.setFontSize(12)
      doc.text(`Data: ${dataAtual}`, 170,10)
-     let y = 45
+     let y = 60
      doc.text("Nome", 14,y)
      doc.text("telefone", 80,y)
      doc.text("email", 130,y)
      y+= 5
      doc.setLineWidth(0.5)
      doc.line(10,y,200,y)
+    
+     y+= 10
+     clientes.forEach((c)=>{
+      if (y > 280){
+        doc.addPage()
+        y = 20
+        doc.text("Nome", 14,y)
+        doc.text("telefone", 80,y)
+        doc.text("email", 130,y)
+        y+= 5
+        doc.setLineWidth(0.5)
+        doc.line(10,y,200,y)
+        y+=10       
+      }
+      doc.text(c.nomeClient,14,y)
+      doc.text(c.phoneCliente,80,y)
+      doc.text(c.emailCliente || "N/A",130,y)
+      y+=10
 
+     })
+     const paginas = doc.internal.getNumberOfPages ()
+     for (let i = 1; i <= paginas; i++){
+      doc.setPage(i)
+      doc.setFontSize(10)
+      doc.text(`Pagina ${i} de ${paginas}`, 105, 290, {align: 'center'})
+     }
      const tempDir = app.getPath('temp')
      const filePath = path.join(tempDir, 'clientes.pdf')
      doc.save(filePath)

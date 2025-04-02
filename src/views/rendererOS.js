@@ -36,6 +36,7 @@ frmOS.addEventListener("submit", async(event)=>{
     }
     api.newOs(os)
 })
+
 //====== Reset form =======================================================================
 function resetForm() {
     location.reload()
@@ -44,3 +45,14 @@ function resetForm() {
     api.resetForm((args)=>{
         resetForm()
     })
+
+    // buscar cliente
+const foco = document.getElementById('inputNameClient')
+document.addEventListener('DOMContentLoaded', () => {
+    btnUpdate.disabled = true
+    btnDelete.disabled = true
+    btnImprimir.disabled = true
+    
+
+    foco.focus()
+})

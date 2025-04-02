@@ -24,6 +24,13 @@ body{
     color: white;
     
 }
+#logo {
+    position: fixed;
+    bottom: 5px;
+    right: -60px;
+    border: none;
+    cursor: none;
+}
 footer {
     height: 55px;
     width: 100%;
@@ -43,3 +50,5 @@ footer p {
     padding-left: 10px;
     
 }
+
+
