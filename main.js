@@ -203,7 +203,7 @@ async function relatorioClientes() {
      const doc = new jsPDF('p','mm','a4')
      const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
      const imageBase64 = fs.readFileSync(imagePath, {encoding: 'base64'})
-     doc.addImage(imageBase64, 'PNG', 3,-15)
+     doc.addImage(imageBase64, 'PNG', -3,-23)
      doc.setFontSize(18)
      doc.text("Relatorio de clientes", 14, 45)
      const dataAtual = new Date().toLocaleDateString('pt-br')
