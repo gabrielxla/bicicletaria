@@ -253,8 +253,15 @@ async function relatorioClientes() {
 //================================================================================
 ipcMain.on('search-name', async(event,name)=>{
   try {
-    const dataClient  = await clientModel.find({nomeClient: new RegExp(name, 'i')})
+    //const dataClient  = await clientModel.find({nomeClient: new RegExp(name, 'i')}|| { cpfCliente: new RegExp(name, 'i')})
     //console.log(dataClient)
+    const dataClient  = await clientModel.find({
+      $or: [
+        { nomeClient: new RegExp(name, 'i') },
+        { cpfCliente: new RegExp(name, 'i') }
+      ]
+    })
+    
     event.reply ('render-client', JSON.stringify(dataClient))
     
   } catch (error) {
