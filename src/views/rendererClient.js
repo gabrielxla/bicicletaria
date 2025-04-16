@@ -18,6 +18,9 @@ function buscarCEP(){
         let lap=document.getElementById('floatingTextarea').value
         console.log(lap)
     }
+// vetor global do blau
+let arrayClient = []
+
 // buscar cliente
 const foco = document.getElementById('searchClient')
 document.addEventListener('DOMContentLoaded', () => {
@@ -63,6 +66,32 @@ const client = {
 }
  api.newClient(client)
 })
+// ================= CRUD READ ============================================================
+function buscarCliente () {
+   let name = document.getElementById('searchClient').value
+   console.log(name)
+   api.searchNameClient(name)
+   api.renderClient((event,dataClient)=>{
+    console.log(dataClient)
+    const dadosCliente = JSON.parse(dataClient)
+    arrayClient = dadosCliente
+    arrayClient.forEach((c)=> {
+        nameClient.value = c.nomeClient,
+        cpfClient.value = c.cpfCliente,
+        emailClient.value = c.emailCliente,
+        phoneClient.value = c.phoneCliente,
+        cepClient.value = c.cepCliente,
+        addressClient.value = c.addressCliente,
+        numberClient.value = c.numberCliente,
+        complementClient.value = c.complementCliente,
+        bairroClient.value = c.bairroCliente,
+        cityClient.value = c.cityCliente,
+        ufClient.value = c.ufCliente
+
+    })
+   })
+}
+
 //====== Reset form =======================================================================
 function resetForm() {
 location.reload()

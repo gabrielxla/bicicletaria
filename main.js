@@ -250,6 +250,16 @@ async function relatorioClientes() {
     console.log(error)
   }
 }
+//================================================================================
+ipcMain.on('search-name', async(event,name)=>{
+  try {
+    const dataClient  = await clientModel.find({nomeClient: new RegExp(name, 'i')})
+    //console.log(dataClient)
+    event.reply ('render-client', JSON.stringify(dataClient))
+    
+  } catch (error) {
+    console.log(error)  }
+})
 
 
 //===================================================================================================================================
@@ -291,3 +301,14 @@ ipcMain.on('new-os', async (event,os)=>{
     console.log(error)
   }
 })
+//===============================================
+//ipcMain.on('search-os', async(event,nameOS)=>{
+  //try {
+    //const dataOS  = await osModel.find({nomeClient: new RegExp(name, 'i')})
+    //console.log(dataClient)
+    //event.reply ('render-client', JSON.stringify(dataClient))
+    
+  //} catch (error) {
+    //console.log(error)  }
+//})
+

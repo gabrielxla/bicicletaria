@@ -1,7 +1,7 @@
 // Banco de dados
 
-//const {conectar, desconectar} = require('./db.js')
-//const clienteModel = require('./src/models/OS.js')
+const {conectar, desconectar} = require('./db.js')
+const clienteModel = require('./src/models/OS.js')
 
 const osSalvar = async (cpfCli,nomeCli,status,funC,bic,bicS,cor,tip,prev,obsC,obsT,pecas,acessorios,tot,pag)=> {
     try{
@@ -91,7 +91,7 @@ const Iniciarsistema = async ()=> {
   //await osSalvar("123456789000","luca","Aberta","Toninho","caloi","11091","Preta","Preventiva","10/04/05","Trocar a corrente","Trocar a corrente por uma nova modelo 05","Corrente", "Bolsa pequena e uma lanterna dianteira",1250,"Dinheiro")
    // await buscarClienteNome("gabriel")
   //await buscarClienteCPF("44909123")
-  //await atualizarCliente("67e43e01d73e7a27dd3af8e0","123456789000","gabriel","Aberta","pituca","caloi","11091","vermelha","Corretiva","10/04/06","Trocar a corrente","Trocar a corrente por uma nova modelo 05","Corrente", "Bolsa pequena e uma lanterna dianteira",1250,"Dinheiro")
+  await atualizarCliente("67ed8fb4724c489734dd918e","123456789000","gabriel","concluida","pituca","caloi","11091","vermelha","Corretiva","10/04/06","Trocar a corrente","Trocar a corrente por uma nova modelo 05","Corrente", "Bolsa pequena e uma lanterna dianteira",1250,"Dinheiro")
   //await excluirCliente("67db2386b6501ad6704953b7")
   await desconectar()
 }

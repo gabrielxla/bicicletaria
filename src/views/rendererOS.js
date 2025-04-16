@@ -56,3 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     foco.focus()
 })
+// ================= CRUD READ ============================================================
+function BuscarOs (){
+    let nameOs = document.getElementById('inputNameClient').value
+    console.log(nameOs)
+    api.searchOsClient(nameOs)
+    
+
+}
