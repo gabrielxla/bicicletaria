@@ -251,6 +251,15 @@ async function relatorioClientes() {
   }
 }
 //================================================================================
+ipcMain.on('validate-search', ()=>{
+  dialog.showMessageBox({
+    type: 'warning',
+    title: 'Atenção!',
+    message: 'Preencha o campo de busca',
+    buttons: ['OK']
+
+  })
+})
 ipcMain.on('search-name', async(event,name)=>{
   try {
     //const dataClient  = await clientModel.find({nomeClient: new RegExp(name, 'i')}|| { cpfCliente: new RegExp(name, 'i')})
@@ -261,6 +270,22 @@ ipcMain.on('search-name', async(event,name)=>{
         { cpfCliente: new RegExp(name, 'i') }
       ]
     })
+    if (dataClient.length === 0) {
+      dialog.showMessageBox({
+        type: "warning",
+        title: "aviso",
+        message: "Cliente não cadastrado, deseja cadastrar?",
+        defaultId: 0,
+        buttons: ['Sim', 'Não']
+
+      }).then((result) =>{
+        if (result.response===0) {
+          event.reply('set-client')
+        } else {
+          event.reply('reset-form')
+        }
+      })
+    } 
     
     event.reply ('render-client', JSON.stringify(dataClient))
     

@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     foco.focus()
 })
+
 // captura dos dados dos inputs
 let frmClient = document.getElementById("frmClient")
 let nameClient = document.getElementById("inputNameClient")
@@ -43,7 +44,17 @@ let bairroClient = document.getElementById("inputBAIClient")
 let cityClient = document.getElementById("inputESTClient")
 let ufClient = document.getElementById("uf")
 
-
+// Função para manipular o enter
+function teclaEnter(event){
+    if (event.key === "Enter") {
+        event.preventDefault()
+        buscarCliente()
+    } 
+}
+function restaurarEnter(){
+    frmClient.removeEventListener('keydown', teclaEnter)
+}
+frmClient.addEventListener('keydown', teclaEnter)
 //===========================================================
 frmClient.addEventListener("submit", async(event)=> {
     event.preventDefault()
@@ -70,8 +81,14 @@ const client = {
 function buscarCliente () {
    let name = document.getElementById('searchClient').value
    console.log(name)
-   api.searchNameClient(name)
-   api.renderClient((event,dataClient)=>{
+   if (name ===""){
+    api.validateSearch()
+    foco.focus()
+    
+
+    }else{
+    api.searchNameClient(name)
+    api.renderClient((event,dataClient)=>{
     console.log(dataClient)
     const dadosCliente = JSON.parse(dataClient)
     arrayClient = dadosCliente
@@ -90,7 +107,36 @@ function buscarCliente () {
 
     })
    })
+   }
+   
 }
+
+// Setar o cliente não cadastrado
+api.setClient((args) => {
+    let campoBusca = document.getElementById('searchClient').value.trim()
+
+    // Regex para verificar se o valor é só número (CPF)
+    if (/^\d{11}$/.test(campoBusca)) {
+        // É um número → CPF
+        cpfClient.focus()
+        foco.value = ""
+        cpfClient.value = campoBusca
+    } 
+    else if(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(campoBusca)){
+        cpfClient.focus()
+        foco.value = ""
+        cpfClient.value = campoBusca
+    }
+    else {
+        // Não é número → Nome
+        nameClient.focus()
+        foco.value = ""
+        nameClient.value = campoBusca
+    }
+})
+
+
+
 
 //====== Reset form =======================================================================
 function resetForm() {
