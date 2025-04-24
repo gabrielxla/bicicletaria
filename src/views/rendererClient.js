@@ -115,7 +115,7 @@ function buscarCliente () {
 api.setClient((args) => {
     let campoBusca = document.getElementById('searchClient').value.trim()
 
-    // Regex para verificar se o valor é só número (CPF)
+    // Regex para verificar se o valor é só número (CPF) teste
     if (/^\d{11}$/.test(campoBusca)) {
         // É um número → CPF
         cpfClient.focus()
