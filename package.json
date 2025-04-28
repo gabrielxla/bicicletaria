@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/gabrielxla/bicicletaria.git#readme",
   "devDependencies": {
-    "electron": "^34.2.0"
+    "electron": "^34.5.3"
   },
   "dependencies": {
     "jspdf": "^3.0.1",

@@ -1,3 +1,5 @@
+//const { ipcMain } = require("electron")
+
 // buscar CEP
 function buscarCEP(){
     let cep =document.getElementById('inputCEpClient').value
@@ -43,6 +45,8 @@ let complementClient = document.getElementById("inputCOMClient")
 let bairroClient = document.getElementById("inputBAIClient")
 let cityClient = document.getElementById("inputESTClient")
 let ufClient = document.getElementById("uf")
+// captura do id do cliente 
+let id = document.getElementById('idClient')
 
 // Função para manipular o enter
 function teclaEnter(event){
@@ -93,6 +97,7 @@ function buscarCliente () {
     const dadosCliente = JSON.parse(dataClient)
     arrayClient = dadosCliente
     arrayClient.forEach((c)=> {
+        id.value = c._id,
         nameClient.value = c.nomeClient,
         cpfClient.value = c.cpfCliente,
         emailClient.value = c.emailCliente,
@@ -104,6 +109,10 @@ function buscarCliente () {
         bairroClient.value = c.bairroCliente,
         cityClient.value = c.cityCliente,
         ufClient.value = c.ufCliente
+        //Bloqueio do botao adicionar 
+        btnCreate.disabled = true
+        btnUpdate.disabled = false
+        btnDelete.disabled = false
 
     })
    })
@@ -135,7 +144,11 @@ api.setClient((args) => {
     }
 })
 
-
+// ======= Crud Delete =================================================================
+function excluirClient() {
+    console.log(id.value)
+    api.deleteClient(id.value)
+}
 
 
 //====== Reset form =======================================================================

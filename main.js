@@ -345,3 +345,21 @@ ipcMain.on('new-os', async (event,os)=>{
     //console.log(error)  }
 //})
 
+// =============== CRUD DELETE =============================
+ipcMain.on('delete-client',async(event, id)=> {
+  console.log(id)
+  try {
+    const {response } = await dialog.showMessageBox(client,{
+      type: 'warning',
+      title: "Atenção",
+      message: "DESEJA EXCLUIR ESTE CLIENTE REALMENTE?",
+      buttons: ['Cancelar','Excluir']
+    })
+    if (response === 1){
+      const delClient = await clientModel.findByIdAndDelete(id)
+      event.reply('reset-form')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})

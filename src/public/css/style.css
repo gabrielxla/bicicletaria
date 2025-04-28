@@ -51,4 +51,10 @@ footer p {
     
 }
 
+/* ocultar o id do cliente */
+#idClient {
+    display: none;
+}
+
+
 
