@@ -66,21 +66,50 @@ frmClient.addEventListener("submit", async(event)=> {
 
 // Limpa o CPF antes de salvar no banco
 let cpfSemFormatacao = cpfClient.value.replace(/\D/g, "");
-const client = {
-    nameCli: nameClient.value,
-    cpfCli: cpfSemFormatacao,
-    emailCli: emailClient.value,
-    phoneCli: phoneClient.value,
-    cepCli: cepClient.value
-    ,addressCli: addressClient.value,
-    numberCli: numberClient.value,
-    complementCli: complementClient.value,
-    bairroCli: bairroClient.value,
-    cityCli: cityClient.value,
-    ufCli: ufClient.value
-}
- api.newClient(client)
-})
+//console.log(nameClient.value, cpfClient.value, emailClient.value, phoneClientClient.value, cepClient.value, addressClient.value, numClient.value, complementClient.value, bairroClient.value, cidadeClient.value, ufClient.value, id.value)
+//estratégia usada para utilizar o submit para criar um novo cliente ou alterar os dados do cliente, se existir id significa que existe um cliente se não significa que é para adicionar um novo cliente
+  if (id.value === "") {
+    //Executar o método para alterar os dados do cliente
+    //Crair um objeto para armazenar os dados do cliente antes de enviar ao main 
+    console.log(id.value)
+    const client = {
+        nameCli: nameClient.value,
+        cpfCli: cpfSemFormatacao,
+        emailCli: emailClient.value,
+        phoneCli: phoneClient.value,
+        cepCli: cepClient.value
+        ,addressCli: addressClient.value,
+        numberCli: numberClient.value,
+        complementCli: complementClient.value,
+        bairroCli: bairroClient.value,
+        cityCli: cityClient.value,
+        ufCli: ufClient.value
+    }
+    api.newClient(client)
+    //Enviar ao main o objeto client - Passo 2 (fluxo)
+    //Uso do preload.js
+} else {
+    //Executar o método para alterar os dados do cliente
+    //Crair um objeto para armazenar os dados do cliente antes de enviar ao main 
+    console.log(id.value)
+    const client = {
+        idCli: id.value,
+        nameCli: nameClient.value,
+        cpfCli: cpfSemFormatacao,
+        emailCli: emailClient.value,
+        phoneCli: phoneClient.value,
+        cepCli: cepClient.value
+        ,addressCli: addressClient.value,
+        numberCli: numberClient.value,
+        complementCli: complementClient.value,
+        bairroCli: bairroClient.value,
+        cityCli: cityClient.value,
+        ufCli: ufClient.value
+    }
+    api.updateClient(client)
+    //Enviar ao main o objeto client - Passo 2 (fluxo)
+    //Uso do preload.js
+}})
 // ================= CRUD READ ============================================================
 function buscarCliente () {
    let name = document.getElementById('searchClient').value

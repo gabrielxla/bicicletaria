@@ -363,3 +363,52 @@ ipcMain.on('delete-client',async(event, id)=> {
     console.log(error)
   }
 })
+//Crud UPDATE ====================================================
+ 
+ipcMain.on('update-client', async (event, client) => {
+  console.log(client)//Teste importante do recebimento dos dados do cliente
+
+  try {
+      //Criar uma nova estrutura de dados usando a classe modelo
+      //Atenção! OS atributos precisam ser identicos ao modelo de dados clientes.js
+      //e os valores são definidos pelo conteúdo ao objeto client
+      const updateClient = await clientModel.findByIdAndUpdate(
+          client.idCli,
+          {
+              nomeClient: client.nameCli,
+              cpfCliente: client.cpfCli,
+              emailCliente: client.emailCli,
+              phoneCliente: client.phoneCli,
+              cepCliente: client.cepCli,
+              addressCliente: client.addressCli,
+              numberCliente: client.numberCli,
+              complementCliente: client.complementCli,
+              bairroCliente: client.bairroCli,
+              cityCliente: client.cityCli,
+              ufCliente: client.ufCli
+          },
+          {
+              new: true
+          }
+      )
+
+      //Messagem de confirmação
+      dialog.showMessageBox({
+          //Customização
+          type: 'info',
+          title: "Aviso",
+          message: "Dados do cliente alterados com sucesso",
+          buttons: ['OK']
+      }).then((result) => {
+          //Ação ao pressionar o botão
+          if (result.response === 0) {
+              //Enviar um pedido para o renderizador limpar os campos e resetar as configurações pré definidas (rotulo preload)
+              event.reply('reset-form')
+          }
+      });
+  } catch (error) {
+      console.log(error)
+  }
+})
+
+//FIM Crud UPDATE ====================================================
