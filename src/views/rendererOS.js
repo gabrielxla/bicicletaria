@@ -47,20 +47,53 @@ function resetForm() {
     })
 
     // buscar cliente
-const foco = document.getElementById('inputNameClient')
+const foco = document.getElementById('inputOSClient')
 document.addEventListener('DOMContentLoaded', () => {
     btnUpdate.disabled = true
     btnDelete.disabled = true
     btnImprimir.disabled = true
-    
+     
 
     foco.focus()
 })
 // ================= CRUD READ ============================================================
 function BuscarOs (){
-    let nameOs = document.getElementById('inputNameClient').value
+    let nameOs = document.getElementById('inputOSClient').value
     console.log(nameOs)
     api.searchOsClient(nameOs)
+    if (nameOs ===""){
+     api.validateSearch()
+     foco.focus()
+     
+ 
+     }else{
+     api.searchOsClient(nameOs)
+     api.renderOS((event,dataOS)=>{
+     console.log(dataOS)
+     const dadosCliente = JSON.parse(dataOS)
+     arrayClient = dadosCliente
+     arrayClient.forEach((c)=> {
+        statusOS.value = c.status || ""
+        funcioOs.value = c.funcionarioResponsavel || ""
+        bikeOs.value = c.bicicleta || ""
+        numS.value = c.numeroQuadro || ""
+        cor.value = c.corBicicleta || ""
+        manutencao.value = c.tipoManutencao || ""
+        previsao.value = c.previsaoEntrega || ""
+        obsC.value = c.observacaoCliente || ""
+        obsF.value = c.conclusaoTecnico || ""
+        pecas.value = c.pecasTroca || ""
+        acessorios.value = c.acessorios || ""
+        total.value = c.total || ""
+        formas.value = c.formasPagamento || ""
+    
+        // Bloqueio do botão adicionar
+        btnCreate.disabled = true
+        btnUpdate.disabled = false
+        btnDelete.disabled = false
+    })
+    })
+    }
     
 
 }

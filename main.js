@@ -305,7 +305,7 @@ ipcMain.on('new-os', async (event,os)=>{
       status: os.status,
       funcionarioResponsavel: os.fun,
       bicicleta: os.bike,
-      numeroSerieBicicleta: os.numQuadro,
+      numeroQuadro: os.numQuadro,
       corBicicleta: os.cor,
       tipoManutencao: os.manutencao,
       previsaoEntrega: os.previsaoEntrega,
@@ -335,15 +335,16 @@ ipcMain.on('new-os', async (event,os)=>{
   }
 })
 //===============================================
-//ipcMain.on('search-os', async(event,nameOS)=>{
-  //try {
-    //const dataOS  = await osModel.find({nomeClient: new RegExp(name, 'i')})
-    //console.log(dataClient)
-    //event.reply ('render-client', JSON.stringify(dataClient))
+ipcMain.on('search-os', async(event,nameOS)=>{
+  try {
+    const dataOS  = await osModel.find({numeroQuadro: new RegExp(nameOS, 'i')})
+    console.log(dataOS)
+    event.reply ('render-Os', JSON.stringify(dataOS))
     
-  //} catch (error) {
-    //console.log(error)  }
-//})
+    
+  } catch (error) {
+    console.log(error)  }
+})
 
 // =============== CRUD DELETE =============================
 ipcMain.on('delete-client',async(event, id)=> {
