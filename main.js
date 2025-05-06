@@ -138,7 +138,7 @@ const  template = [
   },
   {
       label: 'Relatorios',
-      submenu: [{label: 'Clientes',click: () => relatorioClientes()},{type: 'separator'},{label:'OS abertas'},{label:'OS concluidas'}]
+      submenu: [{label: 'Clientes',click: () => relatorioClientes()},{type: 'separator'},{label:'OS abertas', click: () => relatorioOS()},{label:'OS concluidas',click: () => relatorioOSconcluida()}]
   },
   {
       label: 'Ferramentas',
@@ -250,6 +250,120 @@ async function relatorioClientes() {
     console.log(error)
   }
 }
+
+//relatorio das OS ABERTA
+async function relatorioOS() {
+  try {
+    const clientes = await osModel.find({ status: 'aberta' }).sort({ previsaoEntrega: 1 })
+     const doc = new jsPDF('p','mm','a4')
+     const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+     const imageBase64 = fs.readFileSync(imagePath, {encoding: 'base64'})
+     doc.addImage(imageBase64, 'PNG', -3,-23)
+     doc.setFontSize(18)
+     doc.text("Relatorio de OS Abertas", 14, 45)
+     const dataAtual = new Date().toLocaleDateString('pt-br')
+     doc.setFontSize(12)
+     doc.text(`Data: ${dataAtual}`, 170,10)
+     let y = 60
+     doc.text("Funcionario", 14,y)
+     doc.text("Numero de identificação", 50,y)
+     doc.text("Tipo", 115,y)
+     doc.text("Previsão de entrega", 160,y)
+     y+= 5
+     doc.setLineWidth(0.5)
+     doc.line(10,y,200,y)
+    
+     y+= 10
+     clientes.forEach((c)=>{
+      if (y > 280){
+        doc.addPage()
+        y = 20
+        doc.text("Funcionario", 14,y)
+        doc.text("Numero do quadro da bicicleta", 50,y) 
+        doc.text("Tipo", 115,y)
+        doc.text("Previsão de entrega", 160,y)
+        y+= 5
+        doc.setLineWidth(0.5)
+        doc.line(10,y,200,y)
+        y+=10       
+      }
+      doc.text(c.funcionarioResponsavel,14,y)
+      doc.text(c.numeroQuadro|| "N/A",50,y)
+      doc.text(c.tipoManutencao || "N/A",115,y)
+      doc.text(c.previsaoEntrega || "N/A",160,y)
+      y+=10
+
+     })
+     const paginas = doc.internal.getNumberOfPages ()
+     for (let i = 1; i <= paginas; i++){
+      doc.setPage(i)
+      doc.setFontSize(10)
+      doc.text(`Pagina ${i} de ${paginas}`, 105, 290, {align: 'center'})
+     }
+     const tempDir = app.getPath('temp')
+     const filePath = path.join(tempDir, 'OS.pdf')
+     doc.save(filePath)
+     shell.openPath(filePath)
+  } catch (error) {
+    console.log(error)
+  }
+}
+async function relatorioOSconcluida() {
+  try {
+    const clientes = await osModel.find({ status: 'Concluida' }).sort({ previsaoEntrega: 1 })
+     const doc = new jsPDF('p','mm','a4')
+     const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+     const imageBase64 = fs.readFileSync(imagePath, {encoding: 'base64'})
+     doc.addImage(imageBase64, 'PNG', -3,-23)
+     doc.setFontSize(18)
+     doc.text("Relatorio de OS Concluidas", 14, 45)
+     const dataAtual = new Date().toLocaleDateString('pt-br')
+     doc.setFontSize(12)
+     doc.text(`Data: ${dataAtual}`, 170,10)
+     let y = 60
+     doc.text("Funcionario", 14,y)
+     doc.text("Formas de pagamento", 50,y)
+     doc.text("R$", 115,y)
+     doc.text("Tipo de manutenção", 160,y)
+     y+= 5
+     doc.setLineWidth(0.5)
+     doc.line(10,y,200,y)
+    
+     y+= 10
+     clientes.forEach((c)=>{
+      if (y > 280){
+        doc.addPage()
+        y = 20
+        doc.text("Funcionario", 14,y)
+        doc.text("Formas de pagamento", 50,y) 
+        doc.text("R$", 115,y)
+        doc.text("Tipo de manutenção", 160,y)
+        y+= 5
+        doc.setLineWidth(0.5)
+        doc.line(10,y,200,y)
+        y+=10       
+      }
+      doc.text(c.funcionarioResponsavel,14,y)
+      doc.text(c.formasPagamento|| "N/A",50,y)
+      doc.text(`${c.total ?? 'N/A'}`, 115, y)
+      doc.text(c.tipoManutencao || "N/A",160,y)
+      y+=10
+
+     })
+     const paginas = doc.internal.getNumberOfPages ()
+     for (let i = 1; i <= paginas; i++){
+      doc.setPage(i)
+      doc.setFontSize(10)
+      doc.text(`Pagina ${i} de ${paginas}`, 105, 290, {align: 'center'})
+     }
+     const tempDir = app.getPath('temp')
+     const filePath = path.join(tempDir, 'OS.pdf')
+     doc.save(filePath)
+     shell.openPath(filePath)
+  } catch (error) {
+    console.log(error)
+  }
+}
 //================================================================================
 ipcMain.on('validate-search', ()=>{
   dialog.showMessageBox({
@@ -305,7 +419,7 @@ ipcMain.on('new-os', async (event,os)=>{
       status: os.status,
       funcionarioResponsavel: os.fun,
       bicicleta: os.bike,
-      numeroSerieBicicleta: os.numQuadro,
+      numeroQuadro: os.numeroQuadro,
       corBicicleta: os.cor,
       tipoManutencao: os.manutencao,
       previsaoEntrega: os.previsaoEntrega,
