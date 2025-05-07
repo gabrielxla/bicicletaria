@@ -55,6 +55,8 @@ footer p {
 #idClient {
     display: none;
 }
-
-
-
+#viewListSuggestion {
+    z-index: 2;
+    max-width: 381x;
+   
+}

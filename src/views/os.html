@@ -26,24 +26,38 @@
             <input type="date"  class="form-control" id="inputdataClient" spellcheck="false" disabled maxlength="30" >
         </div>
         <!--CLiente-->
-        <div class="col-md-5">
+        <div class="col-md-6">
             <label for="inputNameClient">Buscar cliente</label>
-            <input type="text"  class="form-control" id="inputNameClient" spellcheck="false" placeholder="Cliente" maxlength="30">
+            <div class="input-group">
+            <input type="text"  class="form-control" id="inputNameClient" spellcheck="false"  maxlength="30">
+            
+            <span class="input-group-text">
+                <img src="../public/img/search.png" alt="lupa" width="20">
+            </span>
+            <ul id="viewListSuggestion" class="list-group position-absolute w-100"></ul>
+            </div>
+            
         </div>
-        <div class="col-md-1">
-            <button type="button" class="btn btn-primary" id="btnRead2" onclick="BuscarOs()">Buscar</button>
-        </div>
+       <!-- <div class="col-md-1">
+             <button type="button" class="btn btn-primary" id="btnRead2" onclick="BuscarOs()">Buscar</button>
+        </div>-->
+        
         <!--NOME-->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label for="inputNomeClient">Nome</label>
             <input type="text"  class="form-control" id="inputNomeClient" spellcheck="false" disabled maxlength="30">
         </div>
         <!--CPF-->
-        <div class="col-md-4">
+        <div class="col-md-2">
             <label for="inputCPFClient">CPF</label>
             <input type="text"  class="form-control" id="inputCPFClient" spellcheck="false" disabled maxlength="30">
         </div>
+        <!--ID-->
         <div class="col-md-4">
+            <label for="inputIdClient">ID do cliente</label>
+            <input type="text"  class="form-control" id="inputIdClient" spellcheck="false" disabled maxlength="15">
+        </div>
+        <div class="col-md-3">
             <label for="inputtelClient">Telefone</label>
             <input type="text"  class="form-control" id="inputtelClient" spellcheck="false"  disabled maxlength="30">
         </div>
@@ -67,18 +81,18 @@
         <!--Funcionario-->
         <div class="col-md-3">
             <label for="inputNameFuncionario" class="form-label">Funcionario</label>
-            <input type="text" class="form-control" id="inputNameFuncionario" spellcheck="false" required maxlength="30">
+            <input type="text" class="form-control" id="inputNameFuncionario" spellcheck="false" required maxlength="20">
         </div>
         
         <!--Bicicleta-->
         <div class="col-md-2">
             <label for="inputBIKEClient" class="form-label">Bicicleta/Marca</label>
-            <input type="text" class="form-control" id="inputBIKEClient" spellcheck="false" required maxlength="30">
+            <input type="text" class="form-control" id="inputBIKEClient" spellcheck="false" required maxlength="20">
         </div>
         <!--Numero de Serie-->
         <div class="col-md-3">
             <label for="inputNUMClient" class="form-label">Número do quadro</label>
-            <input type="text" class="form-control" id="inputNUMClient" spellcheck="false" required maxlength="30">
+            <input type="text" class="form-control" id="inputNUMClient" spellcheck="false" required maxlength="15">
         </div>
         <!--COR-->
         <div class="col-md-2">
@@ -138,7 +152,7 @@
       <!--TOTAL-->
       <div class="col-md-3">
         <label for="inputtotalCliente" class="form-label">Total R$</label>
-        <input type="text" class="form-control" id="inputtotalCliente" spellcheck="false"  maxlength="100">
+        <input type="text" class="form-control" id="inputtotalCliente" spellcheck="false"  maxlength="10">
         
     </div>
      <!-- FORMAS DE PAGAMENTO-->
@@ -159,6 +173,7 @@
      <div class="mt-5">
         <button type="submit" class="btn btn-success" id="btnCreate">Adicionar</button>
         <button type="submit" class="btn btn-warning" id="btnUpdate">Editar</button>
+        <button type="button" class="btn btn-primary" id="btnBuscar" onclick="inputOS()">Buscar</button>
         <button type="button"class="btn btn-danger" id="btnDelete">Excluir</button>
         <button type="button" class="btn btn-secondary" id="btnImprimir">Imprimir</button>
         <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>

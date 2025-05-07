@@ -4,6 +4,7 @@ const clientModel = require('./src/models/Cliente.js')
 const osModel = require ("./src/models/OS.js")
 const  {jspdf, default: jsPDF} = require('jspdf')
 const fs = require('fs')
+const prompt = require ('electron-prompt')
 
 const path = require('node:path')
 let win
@@ -266,7 +267,7 @@ async function relatorioOS() {
      doc.text(`Data: ${dataAtual}`, 170,10)
      let y = 60
      doc.text("Funcionario", 14,y)
-     doc.text("Numero de identificação", 50,y)
+     doc.text("Numero de identificação", 70,y)
      doc.text("Tipo", 115,y)
      doc.text("Previsão de entrega", 160,y)
      y+= 5
@@ -279,7 +280,7 @@ async function relatorioOS() {
         doc.addPage()
         y = 20
         doc.text("Funcionario", 14,y)
-        doc.text("Numero do quadro da bicicleta", 50,y) 
+        doc.text("Numero de identificação", 70,y) 
         doc.text("Tipo", 115,y)
         doc.text("Previsão de entrega", 160,y)
         y+= 5
@@ -288,7 +289,7 @@ async function relatorioOS() {
         y+=10       
       }
       doc.text(c.funcionarioResponsavel,14,y)
-      doc.text(c.numeroQuadro|| "N/A",50,y)
+      doc.text(c.numeroQuadro|| "N/A",70,y)
       doc.text(c.tipoManutencao || "N/A",115,y)
       doc.text(c.previsaoEntrega || "N/A",160,y)
       y+=10
@@ -322,7 +323,7 @@ async function relatorioOSconcluida() {
      doc.text(`Data: ${dataAtual}`, 170,10)
      let y = 60
      doc.text("Funcionario", 14,y)
-     doc.text("Formas de pagamento", 50,y)
+     doc.text("Formas de pagamento", 65,y)
      doc.text("R$", 115,y)
      doc.text("Tipo de manutenção", 160,y)
      y+= 5
@@ -335,7 +336,7 @@ async function relatorioOSconcluida() {
         doc.addPage()
         y = 20
         doc.text("Funcionario", 14,y)
-        doc.text("Formas de pagamento", 50,y) 
+        doc.text("Formas de pagamento", 65,y) 
         doc.text("R$", 115,y)
         doc.text("Tipo de manutenção", 160,y)
         y+= 5
@@ -344,7 +345,7 @@ async function relatorioOSconcluida() {
         y+=10       
       }
       doc.text(c.funcionarioResponsavel,14,y)
-      doc.text(c.formasPagamento|| "N/A",50,y)
+      doc.text(c.formasPagamento|| "N/A",70,y)
       doc.text(`${c.total ?? 'N/A'}`, 115, y)
       doc.text(c.tipoManutencao || "N/A",160,y)
       y+=10
@@ -448,7 +449,26 @@ ipcMain.on('new-os', async (event,os)=>{
     console.log(error)
   }
 })
-//===============================================
+//=============================================== Buscar OS========================================
+ipcMain.on('search-os', (event) =>{
+  //console.log("teste: busca OS")
+  prompt({
+    title: 'Buscar OS',
+    label: 'Digite o número da OS:',
+    inputAttrs: {
+        type: 'text'
+    },
+    type: 'input',        
+    width: 400,
+    height: 200
+}).then((result) => {
+    if (result !== null) {
+        console.log(result)
+        //buscar a os no banco pesquisando pelo valor do result (número da OS)
+
+    } 
+})
+})
 //ipcMain.on('search-os', async(event,nameOS)=>{
   //try {
     //const dataOS  = await osModel.find({nomeClient: new RegExp(name, 'i')})
@@ -458,6 +478,15 @@ ipcMain.on('new-os', async (event,os)=>{
   //} catch (error) {
     //console.log(error)  }
 //})
+// buscar cliente para vincular
+ipcMain.on('search-clients', async (event)=>{
+  try {
+    const clients = await clientModel.find().sort({ nomeClient: 1})
+    event.reply('list-clients', JSON.stringify(clients))
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 // =============== CRUD DELETE =============================
 ipcMain.on('delete-client',async(event, id)=> {
