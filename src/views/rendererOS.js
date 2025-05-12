@@ -1,4 +1,7 @@
 //===================================================================
+
+//const OS = require("../models/OS")
+
 //Pegar as informações da Os
 let frmOS = document.getElementById("frmOS")
 let statusOS = document.getElementById("maintenance-type")
@@ -14,28 +17,29 @@ let pecas = document.getElementById("floatingTextareaP")
 let acessorios = document.getElementById("floatingTextareaA")
 let  total = document.getElementById("inputtotalCliente")
 let formas = document.getElementById("maintenance-typeD")
-//===================================================================
-frmOS.addEventListener("submit", async(event)=>{
-    event.preventDefault()
-    console.log(statusOS.value,funcioOs.value,bikeOs.value,numS.value,cor.value,manutencao.value,previsao.value,obsC.value,obsF.value,pecas.value,acessorios.value,total.value,formas.value)
+let os = document.getElementById('inputNumeroOS')
+// //===================================================================
+// frmOS.addEventListener("submit", async(event)=>{
+//     event.preventDefault()
+//     console.log(statusOS.value,funcioOs.value,bikeOs.value,numS.value,cor.value,manutencao.value,previsao.value,obsC.value,obsF.value,pecas.value,acessorios.value,total.value,formas.value)
 
-    const os = {
-        status: statusOS.value,
-        fun: funcioOs.value,
-        bike: bikeOs.value,
-        numeroQuadro: numS.value,
-        cor: cor.value,
-        manutencao: manutencao.value,
-        previsaoEntrega: previsao.value,
-        obsCliente: obsC.value,
-        obsFuncionario: obsF.value,
-        pecas: pecas.value,
-        acessorios: acessorios.value,
-        total: total.value,
-        formasPagamento: formas.value
-    }
-    api.newOs(os)
-})
+//     const os = {
+//         status: statusOS.value,
+//         fun: funcioOs.value,
+//         bike: bikeOs.value,
+//         numeroQuadro: numS.value,
+//         cor: cor.value,
+//         manutencao: manutencao.value,
+//         previsaoEntrega: previsao.value,
+//         obsCliente: obsC.value,
+//         obsFuncionario: obsF.value,
+//         pecas: pecas.value,
+//         acessorios: acessorios.value,
+//         total: total.value,
+//         formasPagamento: formas.value
+//     }
+//     api.newOs(os)
+// })
 
 //====== Reset form =======================================================================
 function resetForm() {
@@ -47,14 +51,14 @@ function resetForm() {
     })
 
     // buscar cliente
-//const foco = document.getElementById('inputNameClient')
+const foco = document.getElementById('inputNameClient')
 document.addEventListener('DOMContentLoaded', () => {
     btnUpdate.disabled = true
     btnDelete.disabled = true
     btnImprimir.disabled = true
     
 
-    //foco.focus()
+    foco.focus()
 })
 // ================= CRUD READ ============================================================
 //function BuscarOs (){
@@ -76,6 +80,7 @@ let arrayClients = []
 
 input.addEventListener('input',() =>{
     const search = input.value.toLowerCase()
+   // console.log(search)
     api.searchClients()
     api.listClients((event,clients)=>{
         const dataClients = JSON.parse(clients)
@@ -113,3 +118,68 @@ input.addEventListener('input',() =>{
 function inputOS() {
     api.searchOS()
  }
+ //======================================
+
+//Evento associado ao botão submit (uso das validações do html)
+frmOS.addEventListener('submit', async (event) => {
+    //evitar o comportamento padrão do submit que é enviar os dados do formulário e reiniciar o documento html
+    event.preventDefault()
+    // validação do campo obrigatório 'idClient' (validação html não funciona via html para campos desativados)
+    if (idClient.value === "") {
+        api.validateClient()
+    } else {
+        // Teste importante (recebimento dos dados do formuláro - passo 1 do fluxo)
+        //console.log(OS.value, idClient.value, statusOS.value, funcioOs.value, bikeOs.value, numS.value, cor.value, manutencao.value, previsao.value, total.value)
+        if (os.value === "") {
+            //Gerar OS
+            //Criar um objeto para armazenar os dados da OS antes de enviar ao main
+            const os = {
+                idClient: idClient.value,
+                status: statusOS.value,
+                fun: funcioOs.value,
+                bike: bikeOs.value,
+                numeroQuadro: numS.value,
+                cor: cor.value,
+                manutencao: manutencao.value,
+                previsaoEntrega: previsao.value,
+                obsCliente: obsC.value,
+                obsFuncionario: obsF.value,
+                pecas: pecas.value,
+                acessorios: acessorios.value,
+                total: total.value,
+                formasPagamento: formas.value
+            }
+            // Enviar ao main o objeto os - (Passo 2: fluxo)
+            // uso do preload.js
+            api.newOs(os)
+        } else {
+            //Editar OS
+
+        }
+    }
+})
+
+// == Fim CRUD Create/Update ==================================
+// == Buscar OS - CRUD Read ===================================
+
+function findOS() {
+    api.searchOS()
+}
+
+api.renderOS((event, dataOS) => {
+    console.log(dataOS)
+    const os = JSON.parse(dataOS)
+    // preencher os campos com os dados da OS
+    os.value = os._id
+    idClient.value = os.idCliente
+    statusOS.value = os.status
+    computer.value = os.computador
+    serial.value = os.serie
+    problem.value = os.problema
+    specialist.value = os.tecnico
+    diagnosis.value = os.diagnostico
+    parts.value = os.pecas
+    total.value = os.valor
+})
+
+// == Fim - Buscar OS - CRUD Read 

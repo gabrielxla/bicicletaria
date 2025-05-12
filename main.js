@@ -5,6 +5,7 @@ const osModel = require ("./src/models/OS.js")
 const  {jspdf, default: jsPDF} = require('jspdf')
 const fs = require('fs')
 const prompt = require ('electron-prompt')
+const mongoose = require('mongoose')
 
 const path = require('node:path')
 let win
@@ -412,11 +413,28 @@ ipcMain.on('search-name', async(event,name)=>{
 
 //===================================================================================================================================
 // CRUD Os
+// Validação de busca (preenchimento obrigatório Id Cliente-OS)
+ipcMain.on('validate-client', (event) => {
+  dialog.showMessageBox({
+      type: 'warning',
+      title: "Aviso!",
+      message: "É obrigatório vincular o cliente na Ordem de Serviço",
+      buttons: ['OK']
+  }).then((result) => {
+      //ação ao pressionar o botão (result = 0)
+      if (result.response === 0) {
+          event.reply('set-search')
+      }
+  })
+})
+
 
 ipcMain.on('new-os', async (event,os)=>{
   console.log(os)
   try {
+    console.log(os.idClient, typeof os.idClient)
     const newOs = new osModel({
+      idCliente: os.idClient,
       status: os.status,
       funcionarioResponsavel: os.fun,
       bicicleta: os.bike,
@@ -461,11 +479,37 @@ ipcMain.on('search-os', (event) =>{
     type: 'input',        
     width: 400,
     height: 200
-}).then((result) => {
+}).then(async(result) => {
     if (result !== null) {
-        console.log(result)
+        
         //buscar a os no banco pesquisando pelo valor do result (número da OS)
-
+        if (mongoose.Types.ObjectId.isValid(result)) {
+          try {
+              const dataOS = await osModel.findById(result)
+              if (dataOS) {
+                  console.log(dataOS) // teste importante
+                  // enviando os dados da OS ao rendererOS
+                  // OBS: IPC só trabalha com string, então é necessário converter o JSON para string JSON.stringify(dataOS)
+                  event.reply('render-os', JSON.stringify(dataOS))
+              } else {
+                  dialog.showMessageBox({
+                      type: 'warning',
+                      title: "Aviso!",
+                      message: "OS não encontrada",
+                      buttons: ['OK']
+                  })
+              }
+          } catch (error) {
+              console.log(error)
+          }
+      } else {
+          dialog.showMessageBox({
+              type: 'error',
+              title: "Atenção!",
+              message: "Formato do número da OS inválido.\nVerifique e tente novamente.",
+              buttons: ['OK']
+          })
+      }
     } 
 })
 })

@@ -7,6 +7,9 @@ const osSchema = new Schema({
     //nomeCliente: { type: String }, // Nome do cliente
     //cpfClient: { type: String,  unique: true, index: true }, // CPF do cliente
     //telefoneCliente: { type: String }, // Telefone do cliente
+    idCliente: {
+        type: String,        
+    },
     status: { type: String  }, // Status da OS
     funcionarioResponsavel: { type: String }, // Nome do funcionário responsável
     bicicleta: { type: String }, // Tipo de bicicleta
