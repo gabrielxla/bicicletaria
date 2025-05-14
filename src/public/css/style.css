@@ -60,3 +60,12 @@ footer p {
     max-width: 381x;
    
 }
+.input-valido {
+    border: 2px solid green;
+    color: green;
+}
+
+.input-invalido {
+    border: 2px solid red;
+    color: red;
+}

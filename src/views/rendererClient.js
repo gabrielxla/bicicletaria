@@ -66,6 +66,11 @@ frmClient.addEventListener("submit", async(event)=> {
 
 // Limpa o CPF antes de salvar no banco
 let cpfSemFormatacao = cpfClient.value.replace(/\D/g, "");
+    // 1. Verificar se o CPF é válido antes de continuar
+    if (!validarCPF()) {
+        alert("CPF inválido! Corrija antes de continuar.");
+        return; // Interrompe o envio caso o CPF seja inválido
+    }
 //console.log(nameClient.value, cpfClient.value, emailClient.value, phoneClientClient.value, cepClient.value, addressClient.value, numClient.value, complementClient.value, bairroClient.value, cidadeClient.value, ufClient.value, id.value)
 //estratégia usada para utilizar o submit para criar um novo cliente ou alterar os dados do cliente, se existir id significa que existe um cliente se não significa que é para adicionar um novo cliente
   if (id.value === "") {
@@ -200,14 +205,12 @@ function aplicarMascaraCPF(campo) {
     campo.value = cpf;
 }
 
-// === Função para validar CPF ===
 function validarCPF() {
-    let campo = document.getElementById('inputCPFClient');
-    let cpf = campo.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    const cpf = cpfClient.value.replace(/\D/g, "");
+    cpfClient.classList.remove("input-valido", "input-invalido");
 
     if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
-        campo.style.borderColor = "red";
-        campo.style.color = "red";
+        cpfClient.classList.add("input-invalido");
         return false;
     }
 
@@ -217,8 +220,7 @@ function validarCPF() {
     resto = (soma * 10) % 11;
     if (resto === 10 || resto === 11) resto = 0;
     if (resto !== parseInt(cpf[9])) {
-        campo.style.borderColor = "red";
-        campo.style.color = "red";
+        cpfClient.classList.add("input-invalido");
         return false;
     }
 
@@ -227,19 +229,18 @@ function validarCPF() {
     resto = (soma * 10) % 11;
     if (resto === 10 || resto === 11) resto = 0;
     if (resto !== parseInt(cpf[10])) {
-        campo.style.borderColor = "red";
-        campo.style.color = "red";
+        cpfClient.classList.add("input-invalido");
         return false;
     }
 
-    campo.style.borderColor = "green";
-    campo.style.color = "green";
+    cpfClient.classList.add("input-valido");
     return true;
 }
 
+
 // Adicionar eventos para CPF
-cpfClient.addEventListener("input", () => aplicarMascaraCPF(cpfClient)); // Máscara ao digitar
-cpfClient.addEventListener("blur", validarCPF); // Validação ao perder o foco
+cpfClient.addEventListener("input", () => aplicarMascaraCPF(cpfClient));
+cpfClient.addEventListener("blur", validarCPF);
 
 
 
