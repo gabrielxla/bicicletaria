@@ -268,8 +268,8 @@ async function relatorioOS() {
      doc.text(`Data: ${dataAtual}`, 170,10)
      let y = 60
      doc.text("Funcionario", 14,y)
-     doc.text("Numero de identificação", 70,y)
-     doc.text("Tipo", 115,y)
+     doc.text("Numero de identificação", 60,y)
+     doc.text("Tipo", 125,y)
      doc.text("Previsão de entrega", 160,y)
      y+= 5
      doc.setLineWidth(0.5)
@@ -281,8 +281,8 @@ async function relatorioOS() {
         doc.addPage()
         y = 20
         doc.text("Funcionario", 14,y)
-        doc.text("Numero de identificação", 70,y) 
-        doc.text("Tipo", 115,y)
+        doc.text("Numero de identificação", 60,y) 
+        doc.text("Tipo", 125,y)
         doc.text("Previsão de entrega", 160,y)
         y+= 5
         doc.setLineWidth(0.5)
@@ -290,7 +290,7 @@ async function relatorioOS() {
         y+=10       
       }
       doc.text(c.funcionarioResponsavel,14,y)
-      doc.text(c.numeroQuadro|| "N/A",70,y)
+      doc.text(c.numeroQuadro|| "N/A",60,y)
       doc.text(c.tipoManutencao || "N/A",115,y)
       doc.text(c.previsaoEntrega || "N/A",160,y)
       y+=10
@@ -550,6 +550,23 @@ ipcMain.on('delete-client',async(event, id)=> {
     console.log(error)
   }
 })
+ipcMain.on('delete-OS',async(event, id)=> {
+  console.log("TESTE")
+  try {
+    const {response } = await dialog.showMessageBox(os,{
+      type: 'warning',
+      title: "Atenção",
+      message: "DESEJA EXCLUIR ESTA OS REALMENTE?",
+      buttons: ['Cancelar','Excluir']
+    })
+    if (response === 1){
+      const delos = await osModel.findByIdAndDelete(id)
+      event.reply('reset-form')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
 //Crud UPDATE ====================================================
  
 ipcMain.on('update-client', async (event, client) => {
@@ -597,5 +614,55 @@ ipcMain.on('update-client', async (event, client) => {
       console.log(error)
   }
 })
+ipcMain.on('update-OS', async (event, OSupd) => {
+  console.log(OSupd)//Teste importante do recebimento dos dados do cliente
+  console.log("ID recebido:", OSupd.idClient)
+
+  try {
+      //Criar uma nova estrutura de dados usando a classe modelo
+      //Atenção! OS atributos precisam ser identicos ao modelo de dados clientes.js
+      //e os valores são definidos pelo conteúdo ao objeto client
+      const updateOS = await osModel.findByIdAndUpdate(
+        
+          OSupd.idCliente,
+          {
+            status: OSupd.status,
+            funcionarioResponsavel: OSupd.fun,
+            bicicleta: OSupd.bike,
+            numeroQuadro: OSupd.numeroQuadro,
+            corBicicleta: OSupd.cor,
+            tipoManutencao: OSupd.manutencao,
+            previsaoEntrega: OSupd.previsaoEntrega,
+            observacaoCliente: OSupd.obsCliente,
+            conclusaoTecnico: OSupd.obsFuncionario,
+            pecasTroca: OSupd.pecas,
+            acessorios: OSupd.acessorios,
+            total: OSupd.total ,
+            formasPagamento: OSupd.formasPagamento
+          },
+          {
+              new: true
+          }
+      )
+
+      //Messagem de confirmação
+      dialog.showMessageBox({
+          //Customização
+          type: 'info',
+          title: "Aviso",
+          message: "Dados da OS alterados com sucesso",
+          buttons: ['OK']
+      }).then((result) => {
+          //Ação ao pressionar o botão
+          if (result.response === 0) {
+              //Enviar um pedido para o renderizador limpar os campos e resetar as configurações pré definidas (rotulo preload)
+              event.reply('reset-form')
+          }
+      });
+  } catch (error) {
+      console.log(error)
+  }
+})
 
 //FIM Crud UPDATE ====================================================
+

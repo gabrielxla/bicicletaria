@@ -1,3 +1,4 @@
+
 //===================================================================
 
 //const OS = require("../models/OS")
@@ -44,6 +45,9 @@ let idOS = document.getElementById('inputNumeroOS')
 // })
 
 //====== Reset form =======================================================================
+
+
+
 function resetForm() {
     location.reload()
     }
@@ -51,7 +55,7 @@ function resetForm() {
     api.resetForm((args)=>{
         resetForm()
     })
-
+    
     // buscar cliente
 const foco = document.getElementById('inputNameClient')
 document.addEventListener('DOMContentLoaded', () => {
@@ -120,6 +124,10 @@ input.addEventListener('input',() =>{
 function inputOS() {
     api.searchOS()
  }
+ function excluirOS() {
+    console.log(idOS.value)
+    api.deleteOS(idOS.value)
+}
  //======================================
 
 //Evento associado ao botão submit (uso das validações do html)
@@ -155,8 +163,29 @@ frmOS.addEventListener('submit', async (event) => {
             // uso do preload.js
             api.newOs(os)
         } else {
-            //Editar OS
-
+        //Editar OS
+        //Executar o método para alterar os dados do cliente
+        //Crair um objeto para armazenar os dados do cliente antes de enviar ao main 
+          console.log(idOS.value)
+                const OSupd = {
+                idClient: idClient.value,
+                status: statusOS.value,
+                fun: funcioOs.value,
+                bike: bikeOs.value,
+                numeroQuadro: numS.value,
+                cor: cor.value,
+                manutencao: manutencao.value,
+                previsaoEntrega: previsao.value,
+                obsCliente: obsC.value,
+                obsFuncionario: obsF.value,
+                pecas: pecas.value,
+                acessorios: acessorios.value,
+                total: total.value,
+                formasPagamento: formas.value
+        }
+            api.updateOS(OSupd)
+            //Enviar ao main o objeto client - Passo 2 (fluxo)
+            //Uso do preload.js
         }
     }
 })
@@ -200,7 +229,10 @@ api.renderOS((event, dataOS) => {
     total.value = os.total
     formas.value = os.formasPagamento
     console.log("Data recebida:", os.data);
-
+    btnUpdate.disabled = false
+    btnDelete.disabled = false
+    btnImprimir.disabled = false
+    btnCreate.disabled = true
     
 })
 

@@ -70,6 +70,7 @@ let cpfSemFormatacao = cpfClient.value.replace(/\D/g, "");
     if (!validarCPF()) {
         alert("CPF inválido! Corrija antes de continuar.");
         return; // Interrompe o envio caso o CPF seja inválido
+        
     }
 //console.log(nameClient.value, cpfClient.value, emailClient.value, phoneClientClient.value, cepClient.value, addressClient.value, numClient.value, complementClient.value, bairroClient.value, cidadeClient.value, ufClient.value, id.value)
 //estratégia usada para utilizar o submit para criar um novo cliente ou alterar os dados do cliente, se existir id significa que existe um cliente se não significa que é para adicionar um novo cliente

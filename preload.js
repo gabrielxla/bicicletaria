@@ -14,12 +14,14 @@ contextBridge.exposeInMainWorld('api',{
     validateSearch: () => ipcRenderer.send('validate-search'),
     setClient: (args) => ipcRenderer.on('set-client',args),
     deleteClient: (id) => ipcRenderer.send('delete-client', id),
+    deleteOS: (id) => ipcRenderer.send('delete-OS', id),
     updateClient: (client) => ipcRenderer.send('update-client', client),
+    updateOS: (OSupd) => ipcRenderer.send('update-OS', OSupd),
     searchOS: () => ipcRenderer.send('search-os'),
     searchClients: (clients) => ipcRenderer.send ('search-clients',clients),
     listClients: (clients) => ipcRenderer.on('list-clients',clients),
     validateClient: () => ipcRenderer.send('validate-client'),
     setSearch: (args) => ipcRenderer.on('set-search', args),
-    renderOS: (dataOS) => ipcRenderer.on('render-os', dataOS)
+    renderOS: (dataOS) => ipcRenderer.on('render-os', dataOS),
     //searchOsClient: (nameOs) => ipcRenderer.send('search-os', nameOs) teste,
 })
