@@ -6,6 +6,7 @@ const  {jspdf, default: jsPDF} = require('jspdf')
 const fs = require('fs')
 const prompt = require ('electron-prompt')
 const mongoose = require('mongoose')
+const { Types } = require('mongoose')
 
 const path = require('node:path')
 let win
@@ -615,52 +616,64 @@ ipcMain.on('update-client', async (event, client) => {
   }
 })
 ipcMain.on('update-OS', async (event, OSupd) => {
-  console.log(OSupd)//Teste importante do recebimento dos dados do cliente
-  console.log("ID recebido:", OSupd.idClient)
+  console.log("Recebido:", OSupd)
+  console.log("ID bruto recebido:", OSupd._id)
 
   try {
-      //Criar uma nova estrutura de dados usando a classe modelo
-      //Atenção! OS atributos precisam ser identicos ao modelo de dados clientes.js
-      //e os valores são definidos pelo conteúdo ao objeto client
-      const updateOS = await osModel.findByIdAndUpdate(
-        
-          OSupd.idCliente,
-          {
-            status: OSupd.status,
-            funcionarioResponsavel: OSupd.fun,
-            bicicleta: OSupd.bike,
-            numeroQuadro: OSupd.numeroQuadro,
-            corBicicleta: OSupd.cor,
-            tipoManutencao: OSupd.manutencao,
-            previsaoEntrega: OSupd.previsaoEntrega,
-            observacaoCliente: OSupd.obsCliente,
-            conclusaoTecnico: OSupd.obsFuncionario,
-            pecasTroca: OSupd.pecas,
-            acessorios: OSupd.acessorios,
-            total: OSupd.total ,
-            formasPagamento: OSupd.formasPagamento
-          },
-          {
-              new: true
-          }
-      )
+    // 🛠️ Converte ID corretamente
+    const idConvertido = new Types.ObjectId(OSupd._id.trim())
 
-      //Messagem de confirmação
-      dialog.showMessageBox({
-          //Customização
-          type: 'info',
-          title: "Aviso",
-          message: "Dados da OS alterados com sucesso",
-          buttons: ['OK']
-      }).then((result) => {
-          //Ação ao pressionar o botão
-          if (result.response === 0) {
-              //Enviar um pedido para o renderizador limpar os campos e resetar as configurações pré definidas (rotulo preload)
-              event.reply('reset-form')
-          }
-      });
+    // ✅ Testa se o documento existe com findById
+    const docTest = await osModel.findById(idConvertido)
+    console.log("📄 Documento encontrado com findById:", docTest)
+
+    if (!docTest) {
+      dialog.showErrorBox("Erro", "Documento com esse ID não encontrado.")
+      return
+    }
+
+    // 🎯 Faz o update
+    const updateOS = await osModel.findByIdAndUpdate(
+      idConvertido,
+      {
+        status: OSupd.status,
+        funcionarioResponsavel: OSupd.fun,
+        bicicleta: OSupd.bike,
+        numeroQuadro: OSupd.numeroQuadro,
+        corBicicleta: OSupd.cor,
+        tipoManutencao: OSupd.manutencao,
+        previsaoEntrega: OSupd.previsaoEntrega,
+        observacaoCliente: OSupd.obsCliente,
+        conclusaoTecnico: OSupd.obsFuncionario,
+        pecasTroca: OSupd.pecas,
+        acessorios: OSupd.acessorios,
+        total: OSupd.total,
+        formasPagamento: OSupd.formasPagamento
+      },
+      { new: true }
+    )
+
+    console.log("🟢 Resultado do update:", updateOS)
+
+    if (!updateOS) {
+      dialog.showErrorBox("Erro", "Erro ao atualizar OS (update nulo).")
+      return
+    }
+
+    dialog.showMessageBox({
+      type: 'info',
+      title: "Aviso",
+      message: "Dados da OS alterados com sucesso",
+      buttons: ['OK']
+    }).then((result) => {
+      if (result.response === 0) {
+        event.reply('reset-form')
+      }
+    })
+
   } catch (error) {
-      console.log(error)
+    console.error("❌ Erro ao atualizar OS:", error)
+    dialog.showErrorBox("Erro inesperado", "Erro ao atualizar OS. Veja o console.")
   }
 })
 

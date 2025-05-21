@@ -144,6 +144,7 @@ frmOS.addEventListener('submit', async (event) => {
             //Gerar OS
             //Criar um objeto para armazenar os dados da OS antes de enviar ao main
             const os = {
+                _id: idOS.value.trim(), // <- ESSENCIAL para encontrar a OS
                 idClient: idClient.value,
                 status: statusOS.value,
                 fun: funcioOs.value,
@@ -168,6 +169,7 @@ frmOS.addEventListener('submit', async (event) => {
         //Crair um objeto para armazenar os dados do cliente antes de enviar ao main 
           console.log(idOS.value)
                 const OSupd = {
+                _id: idOS.value.trim(), // <- ESSENCIAL para encontrar a OS    
                 idClient: idClient.value,
                 status: statusOS.value,
                 fun: funcioOs.value,
@@ -211,7 +213,7 @@ api.renderOS((event, dataOS) => {
         minute: "2-digit",
         second: "2-digit"
     })
-   
+
     idOS.value = os._id
     dateOS.value = formatada
     idClient.value = os.idCliente
