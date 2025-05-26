@@ -678,4 +678,92 @@ ipcMain.on('update-OS', async (event, OSupd) => {
 })
 
 //FIM Crud UPDATE ====================================================
+// Impressao OS
+ipcMain.on('print-os', (event) =>{
+  //console.log("teste: busca OS")
+  prompt({
+    title: 'Imprimir OS',
+    label: 'Digite o número da OS:',
+    inputAttrs: {
+        type: 'text'
+    },
+    type: 'input',        
+    width: 400,
+    height: 200
+}).then(async(result) => {
+    if (result !== null) {
+        
+        //buscar a os no banco pesquisando pelo valor do result (número da OS)
+        if (mongoose.Types.ObjectId.isValid(result)) {
+          try {
+            const dataOS = await osModel.findById(result)
+            if (dataOS && dataOS !== null) {
+                console.log(dataOS) // teste importante
+                const dataClient  = await clientModel.find({ _id: dataOS.idCliente}) 
+                console.log(dataClient)
+                // Impressão 
+                const doc = new jsPDF('p', 'mm', 'a4')
+                        const imagePath = path.join(__dirname, 'src', 'public', 'img', 'logo.png')
+                        const imageBase64 = fs.readFileSync(imagePath, { encoding: 'base64' })
+                        doc.addImage(imageBase64, 'PNG', 5, -5)
+                        doc.setFontSize(18)
+                        doc.text("OS:", 14, 45) //x=14, y=45
+                        
+                        // Extração dos dados da OS e do cliente vinculado
 
+                        // Texto do termo de serviço
+                        doc.setFontSize(10)
+                        const termo = `
+Termo de Serviço e Garantia
+
+O cliente autoriza a realização dos serviços técnicos descritos nesta ordem, ciente de que:
+
+- Diagnóstico e orçamento são gratuitos apenas se o serviço for aprovado. Caso contrário, poderá ser cobrada taxa de análise.
+- Peças substituídas poderão ser retidas para descarte ou devolvidas mediante solicitação no ato do serviço.
+- A garantia dos serviços prestados é de 90 dias, conforme Art. 26 do Código de Defesa do Consumidor, e cobre exclusivamente o reparo executado ou peça trocada, desde que o equipamento não tenha sido violado por terceiros.
+- Não nos responsabilizamos por dados armazenados. Recomenda-se o backup prévio.
+- Equipamentos não retirados em até 90 dias após a conclusão estarão sujeitos a cobrança de armazenagem ou descarte, conforme Art. 1.275 do Código Civil.
+- O cliente declara estar ciente e de acordo com os termos acima.`
+
+                        // Inserir o termo no PDF
+                        doc.text(termo, 14, 60, { maxWidth: 180 }) // x=14, y=60, largura máxima para quebrar o texto automaticamente
+
+                        // Definir o caminho do arquivo temporário e nome do arquivo
+                        const tempDir = app.getPath('temp')
+                        const filePath = path.join(tempDir, 'os.pdf')
+                        // salvar temporariamente o arquivo
+                        doc.save(filePath)
+                        // abrir o arquivo no aplicativo padrão de leitura de pdf do computador do usuário
+                        shell.openPath(filePath)
+                
+            } else {
+                dialog.showMessageBox({
+                    type: 'warning',
+                    title: "Aviso!",
+                    message: "OS não encontrada",
+                    buttons: ['OK']
+                })
+            }
+          } catch (error) {
+              console.log(error)
+          }
+      } else {
+          dialog.showMessageBox({
+              type: 'error',
+              title: "Atenção!",
+              message: "Formato do número da OS inválido.\nVerifique e tente novamente.",
+              buttons: ['OK']
+          })
+      }
+    } 
+})
+})
+// Alert erro 
+ipcMain.on('show-error-box', (event, message) => {
+  dialog.showMessageBox({
+    type: 'error',
+    title: 'Erro',
+    message: message,
+    buttons: ['OK']
+  });
+});

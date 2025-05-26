@@ -61,7 +61,7 @@ const foco = document.getElementById('inputNameClient')
 document.addEventListener('DOMContentLoaded', () => {
     btnUpdate.disabled = true
     btnDelete.disabled = true
-    btnImprimir.disabled = true
+    
     
 
     foco.focus()
@@ -239,3 +239,7 @@ api.renderOS((event, dataOS) => {
 })
 
 // == Fim - Buscar OS - CRUD Read 
+// == Imprimir OS 
+function generateOS(){
+    api.printOS()
+}

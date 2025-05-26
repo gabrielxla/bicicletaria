@@ -23,5 +23,7 @@ contextBridge.exposeInMainWorld('api',{
     validateClient: () => ipcRenderer.send('validate-client'),
     setSearch: (args) => ipcRenderer.on('set-search', args),
     renderOS: (dataOS) => ipcRenderer.on('render-os', dataOS),
+    printOS: () => ipcRenderer.send('print-os'),
+    showErrorBox: (message) => ipcRenderer.send('show-error-box', message)
     //searchOsClient: (nameOs) => ipcRenderer.send('search-os', nameOs) teste,
 })

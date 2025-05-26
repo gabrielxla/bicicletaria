@@ -68,7 +68,7 @@ frmClient.addEventListener("submit", async(event)=> {
 let cpfSemFormatacao = cpfClient.value.replace(/\D/g, "");
     // 1. Verificar se o CPF é válido antes de continuar
     if (!validarCPF()) {
-        alert("CPF inválido! Corrija antes de continuar.");
+        window.api.showErrorBox("CPF inválido! Corrija antes de continuar.");
         return; // Interrompe o envio caso o CPF seja inválido
         
     }
